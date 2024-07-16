@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">2024B_finalProject_YahavLer</string>
+
+    <string-array name="clubs_membership">
+        <item>Select Club Membership</item>
+        <item>Club 1</item>
+        <item>Club 2</item>
+        <item>Club 3</item>
+
+    </string-array></resources>

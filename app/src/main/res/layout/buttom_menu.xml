@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/backgroundColor">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/navigation_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Home"
+        app:icon="@drawable/ic_home"
+        app:iconGravity="textTop"
+        android:gravity="center"
+        android:padding="8dp"
+        android:backgroundTint="@android:color/transparent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/navigation_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Profile"
+        app:icon="@drawable/ic_profile"
+        app:iconGravity="textTop"
+        android:gravity="center"
+        android:padding="8dp"
+        android:backgroundTint="@android:color/transparent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/navigation_clubs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Club"
+        app:icon="@drawable/ic_clubs"
+        app:iconGravity="textTop"
+        android:gravity="center"
+        android:padding="8dp"
+        android:backgroundTint="@android:color/transparent" />
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/navigation_stores"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:text="Store"-->
+<!--        app:icon="@drawable/ic_stores"-->
+<!--        app:iconGravity="textTop"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="8dp"-->
+<!--        android:backgroundTint="@android:color/transparent" />-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/navigation_store_locations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Location"
+        app:icon="@drawable/ic_location"
+        app:iconGravity="textTop"
+        android:gravity="center"
+        android:padding="8dp"
+        android:backgroundTint="@android:color/transparent" />
+
+</LinearLayout>
