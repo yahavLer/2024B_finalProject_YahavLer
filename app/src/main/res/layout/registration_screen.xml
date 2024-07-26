@@ -41,7 +41,7 @@
                 android:layout_marginTop="8dp" />
 
             <Spinner
-                android:id="@+id/registration_club_membership"
+                android:id="@+id/signup_SPN_club_membership"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="8dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/registration_button"
+                android:id="@+id/signup_BTN_Register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Register"

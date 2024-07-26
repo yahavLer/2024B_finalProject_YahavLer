@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/club_logo"
+            android:id="@+id/IV_club_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="center"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="@dimen/poster_width">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/club_name"
+                android:id="@+id/TV_club_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -62,11 +62,11 @@
                 tools:text="Club Name" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/club_accepted_stores"
+                android:id="@+id/TV_club_accepted_stores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/club_name"
-                android:layout_alignStart="@id/club_name"
+                android:layout_below="@id/TV_club_name"
+                android:layout_alignStart="@id/TV_club_name"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
@@ -76,11 +76,11 @@
                 tools:text="Accepted in Stores: Store 1, Store 2" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/club_card_number"
+                android:id="@+id/TV_club_card_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/club_accepted_stores"
-                android:layout_alignStart="@id/club_name"
+                android:layout_below="@id/TV_club_accepted_stores"
+                android:layout_alignStart="@id/TV_club_name"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
                 android:maxLines="1"
@@ -89,11 +89,11 @@
                 tools:text="Card Number: 1234 5678 9012 3456" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/club_expiry_date"
+                android:id="@+id/TV_club_expiry_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/club_card_number"
-                android:layout_alignStart="@id/club_name"
+                android:layout_below="@id/TV_club_card_number"
+                android:layout_alignStart="@id/TV_club_name"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"

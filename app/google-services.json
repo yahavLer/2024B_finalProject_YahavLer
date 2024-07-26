@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169293143263",
+    "project_id": "b-benefitfinder-yahavler",
+    "storage_bucket": "b-benefitfinder-yahavler.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169293143263:android:276c58f88fc3d90e9e9d6a",
+        "android_client_info": {
+          "package_name": "com.example.a2024b_finalproject_yahavler"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcSAMb2ErB8jUDySfGEEsCX3hEfcFXtOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,11 +3,16 @@ package com.example.a2024b_finalproject_yahavler.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.R;
+
+import java.util.List;
 
 public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder> {
 
@@ -20,7 +25,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     @NonNull
     @Override
     public ClubViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.club_item_object, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.club_details_item, parent, false);
         return new ClubViewHolder(view);
     }
 
@@ -49,11 +54,11 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
 
         public ClubViewHolder(@NonNull View itemView) {
             super(itemView);
-            clubName = itemView.findViewById(R.id.tv_club_name);
-            clubLogo = itemView.findViewById(R.id.iv_club_logo);
-            clubStores = itemView.findViewById(R.id.tv_club_stores);
-            cardNumber = itemView.findViewById(R.id.tv_card_number);
-            cardExpiry = itemView.findViewById(R.id.tv_card_expiry);
+            clubName = itemView.findViewById(R.id.TV_club_name);
+            clubLogo = itemView.findViewById(R.id.IV_club_logo);
+            clubStores = itemView.findViewById(R.id.TV_club_accepted_stores);
+            cardNumber = itemView.findViewById(R.id.TV_club_card_number);
+            cardExpiry = itemView.findViewById(R.id.TV_club_expiry_date);
         }
     }
 }

@@ -26,18 +26,18 @@
                 android:layout_marginBottom="16dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/login_name"
+                android:id="@+id/Login_EDT_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name" />
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/login_phone"
+                android:id="@+id/Login_EDT_Phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone number" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_button"
+                android:id="@+id/Login_BTN_Login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Login"

@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
 import com.example.a2024b_finalproject_yahavler.R;
 
+import java.util.List;
+
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHolder> {
 
     private List<Store> storeList;
@@ -63,7 +65,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             storeBranches = itemView.findViewById(R.id.tv_store_branches);
             storeLocations = itemView.findViewById(R.id.tv_store_locations);
             storeClubs = itemView.findViewById(R.id.tv_store_clubs);
-            favoriteButton = itemView.findViewById(R.id.btn_favorite);
+            favoriteButton = itemView.findViewById(R.id.movie_IMG_favorite);
         }
     }
 }
