@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.a2024b_finalproject_yahavler.ActivityView.activity_login;
 import com.example.a2024b_finalproject_yahavler.ActivityView.activity_registration;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     Button btnRegister ;
@@ -24,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.welcome_view);
         findView();
         setBtnClick();
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World 111!");
     }
     private void findView() {
         btnRegister = findViewById(R.id.btn_register);

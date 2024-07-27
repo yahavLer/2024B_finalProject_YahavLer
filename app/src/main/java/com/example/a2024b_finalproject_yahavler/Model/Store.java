@@ -1,20 +1,41 @@
 package com.example.a2024b_finalproject_yahavler.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
+    private static  int storeCounter= 0;
+    private String storeId;
     private String name;
-    private int logoResId;
-    private List<String> branches;
     private List<String> locations;
     private List<String> acceptedClubs;
+    private boolean isFavorite;
+    private int logoResId;
+    private List<String> branches;
 
-    public Store(String name, int logoResId, List<String> branches, List<String> locations, List<String> acceptedClubs) {
+
+    public Store() {
+    }
+
+    public Store(int logoResId,List<String> branches,String name) {
         this.name = name;
+        this.locations = new ArrayList<>();
+        this.acceptedClubs = new ArrayList<>();
+        this.isFavorite = false;
+        this.storeId = generateStoreId();
         this.logoResId = logoResId;
         this.branches = branches;
-        this.locations = locations;
-        this.acceptedClubs = acceptedClubs;
+    }
+    private synchronized String generateStoreId() {
+        storeCounter++;
+        return "S" + storeCounter;
+    }
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public String getName() {
@@ -25,20 +46,12 @@ public class Store {
         this.name = name;
     }
 
-    public int getLogoResId() {
-        return logoResId;
+    public String getStoreId() {
+        return storeId;
     }
 
-    public void setLogoResId(int logoResId) {
-        this.logoResId = logoResId;
-    }
-
-    public List<String> getBranches() {
-        return branches;
-    }
-
-    public void setBranches(List<String> branches) {
-        this.branches = branches;
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 
     public List<String> getLocations() {
@@ -56,4 +69,22 @@ public class Store {
     public void setAcceptedClubs(List<String> acceptedClubs) {
         this.acceptedClubs = acceptedClubs;
     }
+
+    public int getLogoResId() {
+        return logoResId;
+    }
+
+    public void setLogoResId(int logoResId) {
+        this.logoResId = logoResId;
+    }
+
+    public List<String> getBranches() {
+        return branches;
+    }
+
+    public void setBranches(List<String> branches) {
+        this.branches = branches;
+    }
 }
+
+

@@ -47,22 +47,6 @@
                 android:layout_marginTop="8dp"
                 android:entries="@array/clubs_membership" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/registration_credit_card_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Credit Card Details"
-                android:inputType="number"
-                android:layout_marginTop="8dp" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/registration_club_expiry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Club Expiry Date"
-                android:inputType="date"
-                android:layout_marginTop="8dp" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/signup_BTN_Register"
                 android:layout_width="match_parent"
