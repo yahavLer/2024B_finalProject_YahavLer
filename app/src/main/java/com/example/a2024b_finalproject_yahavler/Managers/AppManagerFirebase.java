@@ -7,10 +7,10 @@ import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AppManager {
+public class AppManagerFirebase {
     private FirebaseDatabase database;
 
-    public AppManager() {
+    public AppManagerFirebase() {
         database = FirebaseDatabase.getInstance();
     }
 

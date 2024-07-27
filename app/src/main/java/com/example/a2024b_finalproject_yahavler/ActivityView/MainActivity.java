@@ -1,18 +1,13 @@
-package com.example.a2024b_finalproject_yahavler;
+package com.example.a2024b_finalproject_yahavler.ActivityView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.a2024b_finalproject_yahavler.ActivityView.activity_login;
-import com.example.a2024b_finalproject_yahavler.ActivityView.activity_registration;
+import com.example.a2024b_finalproject_yahavler.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

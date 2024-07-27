@@ -1,4 +1,4 @@
-package com.example.a2024b_finalproject_yahavler;
+package com.example.a2024b_finalproject_yahavler.Managers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.view.View;
 import com.example.a2024b_finalproject_yahavler.ActivityView.activity_profile;
 
 import com.example.a2024b_finalproject_yahavler.ActivityView.stores_of_club_home_view;
+import com.example.a2024b_finalproject_yahavler.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 

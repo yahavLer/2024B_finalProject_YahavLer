@@ -7,15 +7,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.example.a2024b_finalproject_yahavler.MainActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 import com.example.a2024b_finalproject_yahavler.R;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class activity_login extends AppCompatActivity {
     private Gson gson = new Gson();

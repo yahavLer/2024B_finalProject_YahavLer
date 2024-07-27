@@ -8,14 +8,14 @@ public class Club {
     private String clubId;
     private String name;
     private List<String> acceptedStores;
-    private int logoResId;
+    private String logoResId;
     private String cardNumber;
     private String expiryDate;
 
     public Club() {
     }
 
-    public Club(String name, int logoResId, List<String> acceptedStores, String cardNumber, String expiryDate) {
+    public Club(String name, String logoResId, List<String> acceptedStores, String cardNumber, String expiryDate) {
         this.name = name;
         this.acceptedStores = new ArrayList<>();
         this.clubId = generateClubId();
@@ -28,47 +28,53 @@ public class Club {
         return name;
     }
 
-    public void setName(String name) {
+    public Club setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getClubId() {
         return clubId;
     }
 
-    public void setClubId(String clubId) {
+    public Club setClubId(String clubId) {
         this.clubId = clubId;
+        return this;
     }
 
     public List<String> getAcceptedStores() {
         return acceptedStores;
     }
 
-    public void setAcceptedStores(List<String> acceptedStores) {
+    public Club setAcceptedStores(List<String> acceptedStores) {
         this.acceptedStores = acceptedStores;
+        return this;
     }
 ////////////////////////////////////
-    public int getLogoResId() {
+    public String getLogoResId() {
         return logoResId;
     }
 
-    public void setLogoResId(int logoResId) {
+    public Club setLogoResId(String logoResId) {
         this.logoResId = logoResId;
+        return this;
     }
 
     public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
+    public Club setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+        return this;
     }
 
     public String getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(String expiryDate) {
+    public Club setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
+        return this;
     }
 }

@@ -2,28 +2,19 @@ package com.example.a2024b_finalproject_yahavler.ActivityView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.example.a2024b_finalproject_yahavler.Managers.AppManager;
-import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
+import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class activity_registration extends AppCompatActivity {
     private AppCompatEditText signup_EDT_username;
@@ -31,7 +22,7 @@ public class activity_registration extends AppCompatActivity {
     private Spinner signup_SPN_club_membership;
     private MaterialButton signup_BTN_Register;
     private Gson gson = new Gson();
-    private AppManager appManager;
+    private AppManagerFirebase appManager;
 
 
     @Override
@@ -39,7 +30,7 @@ public class activity_registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_screen);
         findView();
-        appManager = new AppManager();
+        appManager = new AppManagerFirebase();
         signup_BTN_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

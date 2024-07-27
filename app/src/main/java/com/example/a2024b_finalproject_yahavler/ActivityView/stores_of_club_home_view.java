@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.a2024b_finalproject_yahavler.NevigationActivity;
+import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
 import com.example.a2024b_finalproject_yahavler.ObjectCallback;
 import com.example.a2024b_finalproject_yahavler.R;
 

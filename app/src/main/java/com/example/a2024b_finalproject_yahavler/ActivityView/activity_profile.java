@@ -2,15 +2,13 @@ package com.example.a2024b_finalproject_yahavler.ActivityView;
 
 import com.example.a2024b_finalproject_yahavler.R;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.example.a2024b_finalproject_yahavler.NevigationActivity;
+import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
 import com.google.gson.Gson;
 
 public class activity_profile extends AppCompatActivity {
