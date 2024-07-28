@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
+import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
 
@@ -22,7 +23,7 @@ public class activity_registration extends AppCompatActivity {
     private Spinner signup_SPN_club_membership;
     private MaterialButton signup_BTN_Register;
     private Gson gson = new Gson();
-    private AppManagerFirebase appManager;
+    private User newUser = new User();
 
 
     @Override
@@ -30,7 +31,6 @@ public class activity_registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_screen);
         findView();
-        appManager = new AppManagerFirebase();
         signup_BTN_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,8 +42,8 @@ public class activity_registration extends AppCompatActivity {
         });
     }
     private void createNewUser(String name, String phoneNumber){
-        User newUser = new User(name,phoneNumber);
-        appManager.addUser(newUser);
+        newUser.setUserId().setName(name).setPhoneNumber(phoneNumber);
+        AppManagerFirebase.addUser(newUser);
     }
     private void findView() {
         signup_EDT_username =findViewById(R.id.registration_name);

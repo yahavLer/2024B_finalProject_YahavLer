@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.R;
 
@@ -32,8 +33,8 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     @Override
     public void onBindViewHolder(@NonNull ClubViewHolder holder, int position) {
         Club club = clubList.get(position);
+        ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
         holder.clubName.setText(club.getName());
-        holder.clubLogo.setImageResource(club.getLogoResId());
         holder.clubStores.setText("Accepted Stores: " + club.getAcceptedStores());
         holder.cardNumber.setText("Card Number: " + club.getCardNumber());
         holder.cardExpiry.setText("Expiry Date: " + club.getExpiryDate());

@@ -2,13 +2,10 @@ package com.example.a2024b_finalproject_yahavler.DataManagers;
 
 import com.example.a2024b_finalproject_yahavler.Model.Club;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class clubManager {
-    public static ArrayList<Club> getMovies() {
+public class ClubManager {
+    public static ArrayList<Club> getClub() {
         ArrayList<Club> clubs = new ArrayList<>();
 
         clubs.add(new Club()

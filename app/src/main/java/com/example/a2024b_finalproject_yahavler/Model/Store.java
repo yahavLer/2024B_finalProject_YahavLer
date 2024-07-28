@@ -7,25 +7,23 @@ public class Store {
     private static  int storeCounter= 0;
     private String storeId;
     private String name;
-    private List<String> locations;
-    private List<String> acceptedClubs;
-    private boolean isFavorite;
-    private int logoResId;
-    private List<String> branches;
+    private ArrayList<String> branchesLocations = null;
+    private ArrayList<String> acceptedClubs= null;
+    private boolean isFavorite = false;
+    private String logo="";
 
 
     public Store() {
     }
 
-    public Store(int logoResId,List<String> branches,String name) {
-        this.name = name;
-        this.locations = new ArrayList<>();
-        this.acceptedClubs = new ArrayList<>();
-        this.isFavorite = false;
-        this.storeId = generateStoreId();
-        this.logoResId = logoResId;
-        this.branches = branches;
-    }
+//    public Store(String logo,List<String> branchesLocations,String name) {
+//        this.name = name;
+//        this.branchesLocations = new ArrayList<>();
+//        this.acceptedClubs = new ArrayList<>();
+//        this.isFavorite = false;
+//        this.storeId = generateStoreId();
+//        this.logo = logo;
+//    }
     private synchronized String generateStoreId() {
         storeCounter++;
         return "S" + storeCounter;
@@ -34,56 +32,54 @@ public class Store {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public Store setFavorite(boolean favorite) {
         isFavorite = favorite;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Store setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
+    public Store setStoreId() {
+        this.storeId = generateStoreId();
+        return this;
     }
 
-    public List<String> getLocations() {
-        return locations;
+    public ArrayList<String> getBranchesLocations() {
+        return branchesLocations;
     }
 
-    public void setLocations(List<String> locations) {
-        this.locations = locations;
+    public Store setBranchesLocations(ArrayList<String> branchesLocations) {
+        this.branchesLocations = branchesLocations;
+        return this;
     }
 
-    public List<String> getAcceptedClubs() {
+    public ArrayList<String> getAcceptedClubs() {
         return acceptedClubs;
     }
 
-    public void setAcceptedClubs(List<String> acceptedClubs) {
+    public Store setAcceptedClubs(ArrayList<String> acceptedClubs) {
         this.acceptedClubs = acceptedClubs;
+        return this;
     }
 
-    public int getLogoResId() {
-        return logoResId;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setLogoResId(int logoResId) {
-        this.logoResId = logoResId;
-    }
-
-    public List<String> getBranches() {
-        return branches;
-    }
-
-    public void setBranches(List<String> branches) {
-        this.branches = branches;
+    public Store setLogo(String logo) {
+        this.logo = logo;
+        return this;
     }
 }
 

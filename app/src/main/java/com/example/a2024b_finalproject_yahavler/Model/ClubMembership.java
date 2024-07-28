@@ -7,6 +7,9 @@ public class ClubMembership {
     private String creditCardInfo;
     private Date membershipExpiry;
 
+    public ClubMembership() {
+    }
+
     // קונסטרקטור
     public ClubMembership(String clubId, String creditCardInfo, Date membershipExpiry) {
         this.clubId = clubId;
@@ -18,26 +21,28 @@ public class ClubMembership {
         return membershipExpiry;
     }
 
-    public void setMembershipExpiry(Date membershipExpiry) {
+    public ClubMembership setMembershipExpiry(Date membershipExpiry) {
         this.membershipExpiry = membershipExpiry;
+        return this;
     }
 
     public String getCreditCardInfo() {
         return creditCardInfo;
     }
 
-    public void setCreditCardInfo(String creditCardInfo) {
+    public ClubMembership setCreditCardInfo(String creditCardInfo) {
         this.creditCardInfo = creditCardInfo;
+        return this;
     }
 
     public String getClubId() {
         return clubId;
     }
 
-    public void setClubId(String clubId) {
+    public ClubMembership setClubId(String clubId) {
         this.clubId = clubId;
+        return this;
     }
-// גטרים וסטטרים
-    // ... (השלמת הקוד בהתאם לצורך)
+
 }
 
