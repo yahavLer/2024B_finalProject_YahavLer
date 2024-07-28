@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="poster_width">120dp</dimen>
-    <dimen name="poster_height">120dp</dimen>
+    <dimen name="poster_width">140dp</dimen>
+    <dimen name="poster_height">140dp</dimen>
     <dimen name="poster_vertical_margin">5dp</dimen>
     <dimen name="poster_corner_radius">20dp</dimen>
     <dimen name="poster_elevation">10dp</dimen>

@@ -9,17 +9,11 @@ public class Club {
     private String name;
     private List<String> acceptedStores;
     private String logoResId;
-    private String cardNumber;
-    private String expiryDate;
+
 
     public Club() {
     }
 
-    public Club(String name, String logoResId, List<String> acceptedStores, String cardNumber, String expiryDate) {
-        this.name = name;
-        this.acceptedStores = new ArrayList<>();
-        this.clubId = generateClubId();
-    }
     private synchronized String generateClubId() {
         clubCounter++;
         return "C" + clubCounter;
@@ -37,8 +31,8 @@ public class Club {
         return clubId;
     }
 
-    public Club setClubId(String clubId) {
-        this.clubId = clubId;
+    public Club setClubId() {
+        this.clubId = generateClubId();
         return this;
     }
 
@@ -50,7 +44,6 @@ public class Club {
         this.acceptedStores = acceptedStores;
         return this;
     }
-////////////////////////////////////
     public String getLogoResId() {
         return logoResId;
     }
@@ -60,21 +53,4 @@ public class Club {
         return this;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public Club setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-        return this;
-    }
-
-    public String getExpiryDate() {
-        return expiryDate;
-    }
-
-    public Club setExpiryDate(String expiryDate) {
-        this.expiryDate = expiryDate;
-        return this;
-    }
 }

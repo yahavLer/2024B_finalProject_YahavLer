@@ -47,7 +47,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
 
     private void initAllStores(){
         stores=StoreManager.getStores();
-        StoreAdapter storeAdapter = new StoreAdapter(stores);
+        StoreAdapter storeAdapter = new StoreAdapter(stores, this);
         AppManagerFirebase.addAllStores(stores);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);

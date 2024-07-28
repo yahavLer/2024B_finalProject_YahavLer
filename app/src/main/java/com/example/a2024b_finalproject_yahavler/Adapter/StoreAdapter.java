@@ -1,5 +1,6 @@
 package com.example.a2024b_finalproject_yahavler.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,13 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHolder> {
-
+    private Context context;
     private List<Store> storeList;
     private StoreCallback storeCallback;
 
-    public StoreAdapter(List<Store> storeList) {
+    public StoreAdapter(List<Store> storeList,Context context) {
         this.storeList = storeList;
+        this.context=context;
     }
 
     public void setStoreCallback(StoreCallback storeCallback) {
@@ -40,6 +42,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         Store store = getItem(position);
+        ImageLoader.init(context);
         ImageLoader.getInstance().load(store.getLogo(), holder.storeLogo);
         holder.storeName.setText(store.getName());
         holder.branchesLocations.setText(String.join("Branches: ", store.getBranchesLocations()));
@@ -74,7 +77,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             store_CARD_data = itemView.findViewById(R.id.store_CARD_data);
             storeName = itemView.findViewById(R.id.tv_store_name);
             storeLogo = itemView.findViewById(R.id.iv_store_logo);
-            branchesLocations = itemView.findViewById(R.id.tv_store_branches);
+            branchesLocations = itemView.findViewById(R.id.tv_store_branches_locations);
             storeClubs = itemView.findViewById(R.id.tv_store_clubs);
             favoriteButton = itemView.findViewById(R.id.movie_IMG_favorite);
             favoriteButton.setOnClickListener(v -> {

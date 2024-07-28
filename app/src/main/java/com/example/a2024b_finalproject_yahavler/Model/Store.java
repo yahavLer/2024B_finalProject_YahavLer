@@ -16,14 +16,6 @@ public class Store {
     public Store() {
     }
 
-//    public Store(String logo,List<String> branchesLocations,String name) {
-//        this.name = name;
-//        this.branchesLocations = new ArrayList<>();
-//        this.acceptedClubs = new ArrayList<>();
-//        this.isFavorite = false;
-//        this.storeId = generateStoreId();
-//        this.logo = logo;
-//    }
     private synchronized String generateStoreId() {
         storeCounter++;
         return "S" + storeCounter;
