@@ -43,6 +43,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth")
+    implementation ("com.firebaseui:firebase-ui-auth:8.0.2")
+
     // Json parser
     implementation("com.google.code.gson:gson:2.10.1")
 

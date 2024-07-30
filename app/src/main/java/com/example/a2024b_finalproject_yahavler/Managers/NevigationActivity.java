@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
+import com.example.a2024b_finalproject_yahavler.ActivityView.activity_manage_club;
 import com.example.a2024b_finalproject_yahavler.ActivityView.activity_profile;
 
 import com.example.a2024b_finalproject_yahavler.ActivityView.stores_of_club_home_view;
@@ -14,7 +15,6 @@ import com.google.gson.Gson;
 public class NevigationActivity {
 
     public static void findNevigationButtens(Activity actvity) {
-        Gson gson = new Gson();
         MaterialButton navigation_home = actvity.findViewById(R.id.navigation_home);
         MaterialButton navigation_profile = actvity.findViewById(R.id.navigation_profile);
         MaterialButton navigation_clubs = actvity.findViewById(R.id.navigation_clubs);
@@ -30,6 +30,13 @@ public class NevigationActivity {
             @Override
             public void onClick(View v) {
                 Intent intentProfile = new Intent(actvity, activity_profile.class);
+                actvity.startActivity(intentProfile);
+            }
+        });
+        navigation_clubs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentProfile = new Intent(actvity, activity_manage_club.class);
                 actvity.startActivity(intentProfile);
             }
         });

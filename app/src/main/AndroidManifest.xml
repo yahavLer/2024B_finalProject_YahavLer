@@ -30,6 +30,8 @@
         <activity android:name=".ActivityView.activity_login" />
         <activity android:name=".ActivityView.activity_profile" />
         <activity android:name=".ActivityView.stores_of_club_home_view" />
+        <activity android:name=".ActivityView.activity_manage_club" />
+
     </application>
 
 </manifest>

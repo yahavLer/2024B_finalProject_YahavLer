@@ -21,17 +21,17 @@ public class ClubManager {
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("Behatsdaa")
+                .setName("בהצדעה")
                 .setLogoResId("https://www.behatsdaa.org.il/static/media/beatsdaha-new-logo.066a9ce6.png")
         );
         clubs.add(new Club()
                 .setClubId()
-                .setName("Hever")
+                .setName("חבר")
                 .setLogoResId("https://www.hvr.co.il/acmplt.asmx/logo?t=963322150470")
         );
         clubs.add(new Club()
                 .setClubId()
-                .setName("Ashmoret")
+                .setName("אשמורת")
                 .setLogoResId("https://digital.isracard.co.il/globalassets/cardsimages/131_800_-1/a_ashmoret_gold.png")
         );
         clubs.add(new Club()

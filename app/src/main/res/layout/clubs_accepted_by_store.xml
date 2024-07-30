@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity_clubs_accepted_by_store">
+    tools:context=".view.activity_club_accepted_by_store">
 
     <RelativeLayout
         android:layout_width="match_parent"

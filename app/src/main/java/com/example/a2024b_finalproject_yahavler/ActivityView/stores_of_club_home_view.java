@@ -22,7 +22,6 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
     private RecyclerView main_LST_store;
     private ArrayList<Store> stores = new ArrayList<>();
 
-    Gson gson = new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +57,5 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
             storeAdapter.notifyItemChanged(position);
         });
     }
-
 
 }

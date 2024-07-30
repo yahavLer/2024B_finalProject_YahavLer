@@ -17,6 +17,22 @@ public class AppManagerFirebase {
     private static DatabaseReference usersRef = database.getReference("users");
     private static DatabaseReference storesRef = database.getReference("stores");
 
+    public static FirebaseDatabase getDatabase() {
+        return database;
+    }
+
+    public static DatabaseReference getClubsRef() {
+        return clubsRef;
+    }
+
+    public static DatabaseReference getUsersRef() {
+        return usersRef;
+    }
+
+    public static DatabaseReference getStoresRef() {
+        return storesRef;
+    }
+
     public static void addUser(User user) {
         usersRef.child(user.getUserId()).setValue(user);
     }
@@ -27,7 +43,9 @@ public class AppManagerFirebase {
     public static void addAllStores(ArrayList<Store>allStores){
         storesRef.setValue(allStores);
     }
-
+    public static void addAllClubs(ArrayList<Club>allClubs){
+        clubsRef.setValue(allClubs);
+    }
     public static void addStoreToFavorites(String userId, String storeId) {
         DatabaseReference userRef = database.getReference("users").child(userId).child("favoriteStores");
         userRef.child(storeId).setValue(true);
