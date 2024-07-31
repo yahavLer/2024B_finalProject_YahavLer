@@ -2,26 +2,28 @@ package com.example.a2024b_finalproject_yahavler.Model;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class User {
     private static int userCounter = 0;
     private String userId = "U0";
-    private String name;
-    private String phoneNumber;
-    private List<ClubMembership> clubMemberships;
-    private List<String> favoriteStores;
+    private String firebaseUid;
+    private String username;
+    private String phone;
+    private String email;
+
+    private HashMap<String, Integer> clubMemberships = new HashMap<>();
+    private HashMap<String, Integer> favoriteStores = new HashMap<>();
+
 
     public User() {
     }
 
-    public User(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.clubMemberships = new ArrayList<>();
-        this.favoriteStores = new ArrayList<>();
-        this.userId = generateUserId();
+    public User(String userId, String username, String email, String phone) {
+        this.username = username;
+        this.phone = phone;
+        this.userId = userId;
+        this.email=email;
     }
     private synchronized String generateUserId() {
         String userId;
@@ -30,21 +32,21 @@ public class User {
         Log.e(userId, "userId "+ userId);
         return userId;
     }
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public User setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public User setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public User setName(String name) {
-        this.name = name;
+    public User setUsername(String username) {
+        this.username = username;
         return this;
     }
 
@@ -55,23 +57,49 @@ public class User {
     public User setUserId() {
         this.userId = generateUserId();
         return this;
-}
+    }
 
-    public List<ClubMembership> getClubMemberships() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public User setFirebaseUserId(String id) {
+        this.firebaseUid = generateUserId();
+        return this;
+    }
+    public HashMap<String, Integer> getClubMemberships() {
         return clubMemberships;
     }
 
-    public User setClubMemberships(List<ClubMembership> clubMemberships) {
+    public void setClubMemberships(HashMap<String, Integer> clubMemberships) {
         this.clubMemberships = clubMemberships;
-        return this;
-}
+    }
 
-    public List<String> getFavoriteStores() {
+    public HashMap<String, Integer> getFavoriteStores() {
         return favoriteStores;
     }
 
-    public User setFavoriteStores(List<String> favoriteStores) {
+    public void setFavorites(HashMap<String, Integer> favoriteStores) {
         this.favoriteStores = favoriteStores;
+    }
+
+    public User addFavorite(String storeId) {
+        this.favoriteStores.put(storeId, 1);
         return this;
     }
+
+
+    public User addClubMemberships(String ClubId) {
+        this.clubMemberships.put(ClubId, 1);
+        return this;
+    }
+
 }

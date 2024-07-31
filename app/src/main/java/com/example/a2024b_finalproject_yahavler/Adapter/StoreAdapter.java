@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
 import com.example.a2024b_finalproject_yahavler.R;
@@ -51,6 +52,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             holder.favoriteButton.setImageResource(R.drawable.heart);
         else
             holder.favoriteButton.setImageResource(R.drawable.empty_heart);
+        holder.favoriteButton.setOnClickListener(v -> {
+            if (storeCallback != null)
+                storeCallback.favoriteButtonClicked(store, position);
+            AppManagerFirebase.addFavoriteStoreToUser(store.getStoreId());
+        });
     }
 
     @Override
@@ -80,10 +86,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             branchesLocations = itemView.findViewById(R.id.tv_store_branches_locations);
             storeClubs = itemView.findViewById(R.id.tv_store_clubs);
             favoriteButton = itemView.findViewById(R.id.movie_IMG_favorite);
-            favoriteButton.setOnClickListener(v -> {
-                if (storeCallback != null)
-                    storeCallback.favoriteButtonClicked(getItem(getAdapterPosition()), getAdapterPosition());
-            });
         }
     }
 }
