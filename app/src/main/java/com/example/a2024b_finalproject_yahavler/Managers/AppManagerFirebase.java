@@ -3,8 +3,10 @@ package com.example.a2024b_finalproject_yahavler.Managers;
 import androidx.annotation.NonNull;
 
 import com.example.a2024b_finalproject_yahavler.Model.Club;
+import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
 import com.example.a2024b_finalproject_yahavler.Model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -136,17 +138,19 @@ public class AppManagerFirebase {
     }
 
 
-    public static void addClubMembership(String membershipId) {
-//        DatabaseReference membershipsRef = database.getReference("users").child(userId).child("clubMemberships");
-//        membershipsRef.child(membershipId.getClubId()).setValue(membershipId);
-        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    public static void addClubMembership(ClubMembership membership, String userId, OnSuccessListener<Boolean> listener) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
-
-        usersRef.child(userUid).child("clubOfUser").child(membershipId).setValue(1);
-
+        userRef.child("clubMemberships").child(membership.getClubId()).setValue(membership)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onSuccess(true);
+                    } else {
+                        listener.onSuccess(false);
+                    }
+                });
     }
+
     public static void getUserName(String userId, CallBack<String> callBack) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");

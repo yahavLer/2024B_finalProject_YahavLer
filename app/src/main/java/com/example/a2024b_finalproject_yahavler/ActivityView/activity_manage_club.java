@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import com.example.a2024b_finalproject_yahavler.Adapter.ClubAdapter;
 import com.example.a2024b_finalproject_yahavler.DataManagers.ClubManager;
@@ -31,7 +35,7 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
     private EditText tvClubCardNumber, tvClubExpiryDate;
     private Button saveButton;
     private String selectedClubId = "";
-
+    private String currentUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +43,42 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         findView();
         initAllStores();
         NevigationActivity.findNevigationButtens(this);
-        // saveButton.setOnClickListener(v -> saveClubMembership());
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            currentUserId = currentUser.getUid();
+            // השתמשי במשתנה currentUserId לכל שאר הפונקציות
+        } else {
+            // המשתמש לא מחובר, יש לטפל במצב זה
+        }
+
+        //saveButton.setOnClickListener(v -> saveClubMembership());
     }
 
     @Override
     public void onClubClick(Club club) {
         selectedClubId = club.getClubId();
-        clubDetailsCard.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onSaveClubMembership(String clubId, String cardNumber, String expiryDate) {
+        Date parsedExpiryDate = null;
+        try {
+            parsedExpiryDate = new SimpleDateFormat("MM/yyyy", Locale.getDefault()).parse(expiryDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+        ClubMembership newMembership = new ClubMembership(currentUserId, selectedClubId, cardNumber, parsedExpiryDate);
+
+        // Update the user's clubMemberships in Firebase
+        AppManagerFirebase.addClubMembership(newMembership, currentUserId, success -> {
+            if (success) {
+                clubDetailsCard.setVisibility(View.GONE); // הסתרת כרטיס פרטי החברות
+                Toast.makeText(this, "Club added successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to update club membership", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void findView() {
@@ -64,27 +97,6 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         main_LST_club.setLayoutManager(linearLayoutManager);
         main_LST_club.setAdapter(clubAdapter);
-    }
-
-    private void saveClubMembership() {
-        String cardNumber = tvClubCardNumber.getText().toString();
-        String expiryDateStr = tvClubExpiryDate.getText().toString();
-        Date expiryDate = parseDate(expiryDateStr);
-
-        if (selectedClubId.isEmpty() || cardNumber.isEmpty() || expiryDate == null) {
-            // Handle error: show a message to the user
-            return;
-        }
-
-        ClubMembership clubMembership = new ClubMembership(
-                "currentUserId", // Replace with actual user ID
-                selectedClubId,
-                cardNumber,
-                expiryDate
-        );
-
-        // Save clubMembership object (implement the save logic)
-        // For example: ClubManager.saveClubMembership(clubMembership);
     }
 
     private Date parseDate(String dateStr) {
