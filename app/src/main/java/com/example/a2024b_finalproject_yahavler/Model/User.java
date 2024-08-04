@@ -12,25 +12,15 @@ public class User {
     private String phone;
     private String email;
 
-    private HashMap<String, Integer> clubMemberships = new HashMap<>();
-    private HashMap<String, Integer> favoriteStores = new HashMap<>();
-
+    private HashMap<String, ClubMembership> clubMemberships = new HashMap<>();
+    private HashMap<String, String> favoriteStores = new HashMap<>();
 
     public User() {
     }
 
-    public User(String userId, String username, String email, String phone) {
-        this.username = username;
-        this.phone = phone;
-        this.userId = userId;
-        this.email=email;
-    }
     private synchronized String generateUserId() {
-        String userId;
         userCounter++;
-        userId="U" + userCounter;
-        Log.e(userId, "userId "+ userId);
-        return userId;
+        return "U" + userCounter;
     }
     public String getPhone() {
         return phone;
@@ -63,43 +53,39 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public User setFirebaseUserId(String id) {
         this.firebaseUid = generateUserId();
         return this;
     }
-    public HashMap<String, Integer> getClubMemberships() {
+    public HashMap<String, ClubMembership> getClubMemberships() {
         return clubMemberships;
     }
 
-    public void setClubMemberships(HashMap<String, Integer> clubMemberships) {
+    public void setClubMemberships(HashMap<String, ClubMembership> clubMemberships) {
         this.clubMemberships = clubMemberships;
     }
 
-    public HashMap<String, Integer> getFavoriteStores() {
+    public HashMap<String, String> getFavoriteStores() {
         return favoriteStores;
     }
 
-    public void setFavorites(HashMap<String, Integer> favoriteStores) {
+    public void setFavorites(HashMap<String, String> favoriteStores) {
         this.favoriteStores = favoriteStores;
     }
 
     public User addFavorite(String storeId) {
-        this.favoriteStores.put(storeId, 1);
+        this.favoriteStores.put(storeId, "1");
         return this;
     }
 
-
-    public User addClubMemberships(String ClubId) {
-        this.clubMemberships.put(ClubId, 1);
-        return this;
+    public void addClubMembership(ClubMembership membership) {
+        clubMemberships.put(membership.getClubId(), membership);
     }
 
 }

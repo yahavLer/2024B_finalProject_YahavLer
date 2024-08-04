@@ -60,8 +60,11 @@ public class activity_registration extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         String userId = mAuth.getCurrentUser().getUid();
-                        User newUser = new User(userId, username, email, phone);
-
+                        User newUser = new User()
+                                .setUserId()
+                                .setUsername(username)
+                                .setEmail(email)
+                                .setPhone(phone);
                         databaseReference.child(userId).setValue(newUser)
                                 .addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {

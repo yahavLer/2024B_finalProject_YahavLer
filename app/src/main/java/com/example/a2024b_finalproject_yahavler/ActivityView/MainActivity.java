@@ -21,11 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.welcome_view);
         findView();
         setBtnClick();
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World 111!");
     }
     private void findView() {
         btnRegister = findViewById(R.id.btn_register);

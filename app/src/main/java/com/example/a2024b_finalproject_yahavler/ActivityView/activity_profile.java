@@ -1,14 +1,22 @@
 package com.example.a2024b_finalproject_yahavler.ActivityView;
 
+import com.example.a2024b_finalproject_yahavler.Adapter.ClubAdapter;
+import com.example.a2024b_finalproject_yahavler.Adapter.UserClubsAdapter;
+import com.example.a2024b_finalproject_yahavler.DataManagers.ClubManager;
+import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
+import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class activity_profile extends AppCompatActivity {
     private TextView EDT_Hello;
     private TextView EDT_username;
@@ -28,6 +38,10 @@ public class activity_profile extends AppCompatActivity {
     private ImageView profileImage;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private RecyclerView clubsRecyclerView;
+    private UserClubsAdapter userClubsAdapter;
+    private ArrayList<ClubMembership> clubMembershipsList = new ArrayList<>();
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +51,14 @@ public class activity_profile extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        // משיכת נתוני המשתמש
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
+            Log.d("ProfileActivity", "User ID: " + userId);
             loadUserProfile(userId);
+            loadUserClubMemberships(userId);
         }
 
-        // הפעלת ניווט
         NevigationActivity.findNevigationButtens(this);
     }
 
@@ -54,6 +68,27 @@ public class activity_profile extends AppCompatActivity {
         EDT_email = findViewById(R.id.profile_EDT_email);
         EDT_phone = findViewById(R.id.profile_phone);
         profileImage = findViewById(R.id.profile_image);
+        clubsRecyclerView = findViewById(R.id.clubs_recycler_view);
+    }
+
+    private void initClubOfUser(){
+        clubsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        userClubsAdapter = new UserClubsAdapter(clubMembershipsList);
+        clubsRecyclerView.setAdapter(userClubsAdapter);
+    }
+
+    private void loadUserClubMemberships(String userId) {
+        AppManagerFirebase.getUserClubMemberships(userId, memberships -> {
+            if (memberships != null) {
+                clubMembershipsList.clear();
+                clubMembershipsList.addAll(memberships);
+                if (userClubsAdapter == null) {
+                    initClubOfUser();
+                } else {
+                    userClubsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void loadUserProfile(String userId) {
@@ -66,18 +101,15 @@ public class activity_profile extends AppCompatActivity {
                     EDT_username.setText(user.getUsername());
                     EDT_email.setText(user.getEmail());
                     EDT_phone.setText(user.getPhone());
-
-                    // כאן נוכל לטעון את תמונת הפרופיל
-                    // לדוגמה אם התמונה מאוחסנת כ-URL:
-                    // Glide.with(activity_profile.this).load(user.getProfileImageUrl()).into(profileImage);
+                    // Load profile image if needed
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // טיפול בשגיאות
+                // Handle errors
             }
         });
     }
-
 }
+

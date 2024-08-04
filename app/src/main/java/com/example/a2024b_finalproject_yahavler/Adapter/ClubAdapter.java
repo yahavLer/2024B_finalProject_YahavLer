@@ -1,5 +1,6 @@
 package com.example.a2024b_finalproject_yahavler.Adapter;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,9 @@ import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.R;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder> {
     private Context context;
@@ -48,8 +51,8 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
         holder.clubName.setText(club.getName());
         ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
         holder.CV_club_details.setVisibility(View.GONE);
+        selectedClubId = club.getClubId(); // עדכון ה-clubId
         holder.btnAddClub.setOnClickListener(v -> {
-            selectedClubId = club.getClubId(); // עדכון ה-clubId
             if(holder.CV_club_details.getVisibility() == View.VISIBLE){
                 holder.CV_club_details.setVisibility(View.GONE);
             }else{
@@ -65,6 +68,25 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
                 );
             }
         });
+        holder.tvClubExpiryDate.setOnClickListener(v -> showDatePickerDialog(holder.tvClubExpiryDate));
+    }
+    private void showDatePickerDialog(TextView tvClubExpiryDate) {
+        // Get the current date
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Create a new instance of DatePickerDialog and show it
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context,  // שימוש ב-context במקום this
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Format the selected date (you can customize this format)
+                    String formattedDate = String.format(Locale.getDefault(), "%02d/%d", selectedMonth + 1, selectedYear);
+                    tvClubExpiryDate.setText(formattedDate);
+                },
+                year, month, day);
+        datePickerDialog.show();
     }
 
     @Override

@@ -92,7 +92,6 @@ public class activity_login extends AppCompatActivity {
             login_EDT_password.requestFocus();
             return false;
         }
-
         return true;
     }
 

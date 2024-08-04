@@ -3,6 +3,8 @@ package com.example.a2024b_finalproject_yahavler.Model;
 import java.util.Date;
 
 public class ClubMembership {
+    private static  int clubMemberCounter= 0;
+    private String CmId;
     private String clubId;
     private String creditCardInfo;
     private Date membershipExpiry;
@@ -16,6 +18,18 @@ public class ClubMembership {
         this.userId = userId;
         this.creditCardInfo = creditCardInfo;
         this.membershipExpiry = membershipExpiry;
+    }
+    private synchronized String generateId() {
+        clubMemberCounter++;
+        return "CM" + clubMemberCounter;
+    }
+    public String getCmId() {
+        return CmId;
+    }
+
+    public ClubMembership setCmId() {
+        this.CmId = generateId();
+        return this;
     }
 
     public Date getMembershipExpiry() {

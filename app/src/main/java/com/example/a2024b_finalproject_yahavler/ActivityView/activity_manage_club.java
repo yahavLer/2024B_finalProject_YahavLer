@@ -41,7 +41,7 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_clubs);
         findView();
-        initAllStores();
+        initAllClubs();
         NevigationActivity.findNevigationButtens(this);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -50,8 +50,6 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         } else {
             // המשתמש לא מחובר, יש לטפל במצב זה
         }
-
-        //saveButton.setOnClickListener(v -> saveClubMembership());
     }
 
     @Override
@@ -68,18 +66,18 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
             e.printStackTrace();
             return;
         }
-        ClubMembership newMembership = new ClubMembership(currentUserId, selectedClubId, cardNumber, parsedExpiryDate);
-
-        // Update the user's clubMemberships in Firebase
+        // יצירת ה-ClubMembership החדש
+        ClubMembership newMembership = new ClubMembership(currentUserId, clubId, cardNumber, parsedExpiryDate);
+        // עדכון רשימת החברות של המשתמש ב-Firebase
         AppManagerFirebase.addClubMembership(newMembership, currentUserId, success -> {
             if (success) {
-                clubDetailsCard.setVisibility(View.GONE); // הסתרת כרטיס פרטי החברות
                 Toast.makeText(this, "Club added successfully", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Failed to update club membership", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private void findView() {
         main_LST_club = findViewById(R.id.clubs_recycler_view);
@@ -89,7 +87,7 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         saveButton = findViewById(R.id.save_button);
     }
 
-    private void initAllStores(){
+    private void initAllClubs(){
         clubs = ClubManager.getClub();
         ClubAdapter clubAdapter = new ClubAdapter(clubs, this, this);
         AppManagerFirebase.addAllClubs(clubs);
