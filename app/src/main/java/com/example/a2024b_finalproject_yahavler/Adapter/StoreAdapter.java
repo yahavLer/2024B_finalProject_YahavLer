@@ -1,6 +1,7 @@
 package com.example.a2024b_finalproject_yahavler.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
 import com.example.a2024b_finalproject_yahavler.R;
 import com.example.a2024b_finalproject_yahavler.Callback.StoreCallback;
+import com.example.a2024b_finalproject_yahavler.ActivityView.activity_club_accepted_by_store;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
@@ -25,14 +27,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     private List<Store> storeList;
     private StoreCallback storeCallback;
 
-    public StoreAdapter(List<Store> storeList,Context context) {
+    public StoreAdapter(List<Store> storeList, Context context) {
         this.storeList = storeList;
-        this.context=context;
+        this.context = context;
     }
 
     public void setStoreCallback(StoreCallback storeCallback) {
         this.storeCallback = storeCallback;
     }
+
     @NonNull
     @Override
     public StoreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,24 +51,45 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         holder.storeName.setText(store.getName());
         holder.branchesLocations.setText(String.join("Branches: ", store.getBranchesLocations()));
         holder.storeClubs.setText(String.join("Accepted Clubs: ", store.getAcceptedClubs()));
+
         if (store.isFavorite())
             holder.favoriteButton.setImageResource(R.drawable.heart);
         else
             holder.favoriteButton.setImageResource(R.drawable.empty_heart);
+
         holder.favoriteButton.setOnClickListener(v -> {
-            if (storeCallback != null)
+            if (storeCallback != null) {
                 storeCallback.favoriteButtonClicked(store, position);
-            AppManagerFirebase.addFavoriteStoreToUser(store.getStoreId());
+            }
+            if (store.isFavorite()) {
+                // Remove from favorites
+                AppManagerFirebase.removeStoreFromFavorites(store.getStoreId());
+            } else {
+                // Add to favorites
+                AppManagerFirebase.addFavoriteStoreToUser(store.getStoreId());
+            }
+            store.setFavorite(!store.isFavorite());
+            notifyItemChanged(position); // Update the item view
+            });
+        holder.itemView.setOnClickListener(v -> {
+            if (storeCallback != null) {
+                storeCallback.onStoreClick(store);
+            }
+            Intent intent = new Intent(context, activity_club_accepted_by_store.class);
+            intent.putExtra("STORE_ID", store.getStoreId());
+            context.startActivity(intent);
         });
     }
 
+
     @Override
     public int getItemCount() {
-        if (storeList==null)
+        if (storeList == null)
             return 0;
         else
             return storeList.size();
     }
+
     public Store getItem(int position) {
         return storeList.get(position);
     }

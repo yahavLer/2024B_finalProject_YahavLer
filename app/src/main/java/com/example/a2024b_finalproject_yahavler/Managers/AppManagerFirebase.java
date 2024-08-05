@@ -1,5 +1,7 @@
 package com.example.a2024b_finalproject_yahavler.Managers;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.a2024b_finalproject_yahavler.Model.Club;
@@ -15,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppManagerFirebase {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();;
@@ -55,28 +59,15 @@ public class AppManagerFirebase {
         clubsRef.setValue(allClubs);
     }
 
-    public static void addFavoriteStoreToUser(String storeId){
-        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference usersRef = database.getReference("users");
-        usersRef.child(userUid).child("favoriteStores").child(storeId).setValue(1);
+    public static void addFavoriteStoreToUser(String storeId) {
+        String userId = FirebaseAuth.getInstance().getUid();
+        if (userId != null) {
+            usersRef.child(userId).child("favoriteStores").child(storeId).setValue(1);        }
     }
 
     public static void isStoreIsFav(String storeId, CallBack<Boolean> callBack) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference usersRef = database.getReference("users");
         usersRef.child(userUid).child("favoriteStores").child(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Integer result = snapshot.getValue(Integer.class);
-//
-//                if (result != null  &&   result > 0) {
-//                    callBack.res(true);
-//                } else{
-//                    callBack.res(false);
-//                }
-//            }
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String result = snapshot.getValue(String.class);
@@ -84,10 +75,12 @@ public class AppManagerFirebase {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle errors
             }
         });
     }
+
+
     public static void addClubToUser(String clubId) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -191,7 +184,6 @@ public class AppManagerFirebase {
                     callback.onClubLoaded(club);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors
@@ -202,5 +194,47 @@ public class AppManagerFirebase {
     public interface ClubCallback {
         void onClubLoaded(Club club);
     }
+    public static void loadDataFromFirebase() {
+        // Load Clubs
+        clubsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Handle data here
+                Map<String, Object> clubsData = new HashMap<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    clubsData.put(snapshot.getKey(), snapshot.getValue());
+                }
+                // Store data locally or update UI
+                Log.d("Firebase", "Clubs data loaded: " + clubsData);
+                // Example: Toast.makeText(MainActivity.this, "Clubs data loaded", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle possible errors
+                Log.e("Firebase", "Failed to load clubs data.", databaseError.toException());
+            }
+        });
+
+        // Load Stores
+        storesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Handle data here
+                Map<String, Object> storesData = new HashMap<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    storesData.put(snapshot.getKey(), snapshot.getValue());
+                }
+                // Store data locally or update UI
+                Log.d("Firebase", "Stores data loaded: " + storesData);
+                // Example: Toast.makeText(MainActivity.this, "Stores data loaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle possible errors
+                Log.e("Firebase", "Failed to load stores data.", databaseError.toException());
+            }
+        });
+    }
 }

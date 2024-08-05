@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a2024b_finalproject_yahavler.R;
 
 public class ImageLoader {
@@ -36,6 +37,8 @@ public class ImageLoader {
                 .load(source)
                 .placeholder(R.drawable.unavailable_photo)
                 .centerInside()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imageView);
     }
     public void load (Drawable source, ImageView imageView){
@@ -44,7 +47,12 @@ public class ImageLoader {
                 .load(source)
                 .placeholder(R.drawable.unavailable_photo)
                 .centerInside()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imageView);
     }
+
+
+
 
 }

@@ -111,5 +111,24 @@ public class activity_profile extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Lifecycle", "onPause called");
+        // Save any necessary state here
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Lifecycle", "onResume called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Lifecycle", "onDestroy called");
+        // Clean up any resources here
+    }
 }
 

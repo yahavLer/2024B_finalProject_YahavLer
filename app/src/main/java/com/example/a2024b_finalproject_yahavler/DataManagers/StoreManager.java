@@ -23,7 +23,7 @@ public class StoreManager {
                 .setName("Converse")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Haifa", "Eilat")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_converse.jpg")
         );
 
@@ -41,7 +41,7 @@ public class StoreManager {
                 .setName("Foot Locker")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Beer Sheva", "Kfar Saba")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_footlocker_new.jpg")
         );
 
@@ -68,7 +68,7 @@ public class StoreManager {
                 .setName("Lacoste")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Ashkelon", "Modiin")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_lacoste.jpg")
         );
 
@@ -86,7 +86,7 @@ public class StoreManager {
                 .setName("Nautica")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Hadera", "Carmiel")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_nautica.png")
         );
 
@@ -104,7 +104,7 @@ public class StoreManager {
                 .setName("Jump")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Afula", "Zichron Yaakov")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_jumponot.jpg")
         );
 
@@ -122,7 +122,7 @@ public class StoreManager {
                 .setName("Puma")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Rosh HaAyin", "Kiryat Shmona")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_puma.jpg")
         );
 
@@ -140,7 +140,7 @@ public class StoreManager {
                 .setName("Ruby Ray")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Givatayim", "Or Yehuda")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_rubybay.jpg")
         );
 
@@ -158,7 +158,7 @@ public class StoreManager {
                 .setName("Story")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Hod Hasharon", "Beit Shemesh")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_story.jpg")
         );
 
@@ -176,7 +176,7 @@ public class StoreManager {
                 .setName("Terminal X")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Yavne", "Kfar Saba")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_terminalx.jpg")
         );
 
@@ -194,7 +194,7 @@ public class StoreManager {
                 .setName("Under Armour")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Kiryat Yam", "Eilat")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_underarmour.jpg")
         );
 
@@ -221,7 +221,7 @@ public class StoreManager {
                 .setName("H&O")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Lod", "Kiryat Gat")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_ho_2021.jpg")
         );
 
@@ -239,7 +239,7 @@ public class StoreManager {
                 .setName("Afrodita")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Ashkelon", "Bat Yam")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_afrodita.jpg")
         );
 
@@ -257,7 +257,7 @@ public class StoreManager {
                 .setName("Golf")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Haifa", "Petah Tikva")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_golf.png")
         );
 
@@ -275,7 +275,7 @@ public class StoreManager {
                 .setName("Hugo")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Kfar Saba", "Modiin")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_hugo.jpg")
         );
 
@@ -293,7 +293,7 @@ public class StoreManager {
                 .setName("Yanga")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Nahariya", "Raanana")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_yanga.jpg")
         );
 
@@ -311,7 +311,7 @@ public class StoreManager {
                 .setName("Lee Cooper")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Holon", "Kiryat Ata")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_leecooper.png")
         );
 
@@ -329,7 +329,7 @@ public class StoreManager {
                 .setName("Michael Kors")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Ramla", "Beit Shemesh")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_michaelkors.jpg")
         );
 
@@ -347,7 +347,7 @@ public class StoreManager {
                 .setName("Polgat")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Sderot", "Dimona")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_polgat.png")
         );
 
@@ -365,7 +365,7 @@ public class StoreManager {
                 .setName("Factory 54")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Kiryat Gat", "Rosh HaAyin")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_factory54_new.jpg")
         );
 
@@ -383,7 +383,7 @@ public class StoreManager {
                 .setName("Calvin Klein")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Tel Aviv", "Jerusalem")))
                 .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
-                .setFavorite(true)
+                .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_cljeans.jpg")
         );
 

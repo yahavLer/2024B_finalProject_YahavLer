@@ -60,9 +60,10 @@ public class User {
 
 
     public User setFirebaseUserId(String id) {
-        this.firebaseUid = generateUserId();
+        this.firebaseUid = id; // שים את ה-id שהתקבל
         return this;
     }
+
     public HashMap<String, ClubMembership> getClubMemberships() {
         return clubMemberships;
     }
