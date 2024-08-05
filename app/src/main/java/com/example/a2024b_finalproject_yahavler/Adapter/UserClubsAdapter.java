@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
+import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.R;
 
@@ -36,7 +37,6 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
         holder.TV_club_name.setText(clubMembership.getClubId());
         holder.TV_club_card_number.setText("Card Number: " + clubMembership.getCreditCardInfo());
         holder.TV_club_expiry_date.setText("Expiry Date: " + clubMembership.getMembershipExpiry());
-
         // Fetch Club details for logo
         AppManagerFirebase.getClub(clubMembership.getClubId(), club -> {
             if (club != null) {
@@ -46,6 +46,7 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
                 } else {
                     holder.clubLogo.setImageResource(R.drawable.unavailable_photo); // Default image if no logo found
                 }
+                ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
             }
         });
     }

@@ -40,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_view);
         findView();
-        setBtnClick();
         initAllStores();
         initAllClubs();
 
         // Load data from Firebase
         AppManagerFirebase.loadDataFromFirebase();
+        setBtnClick();
     }
 
     private void findView() {

@@ -13,7 +13,7 @@ public class ImageLoader {
     private static volatile ImageLoader instance;
 
     private ImageLoader(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext(); // Use application context to prevent memory leaks
     }
 
     public static ImageLoader getInstance() {
@@ -52,7 +52,14 @@ public class ImageLoader {
                 .into(imageView);
     }
 
-
+    public void loadImage(String url, ImageView imageView) {
+        Glide.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.loading) // Placeholder image
+                .error(R.drawable.unavailable_photo) // Error image
+                .into(imageView);
+    }
 
 
 }

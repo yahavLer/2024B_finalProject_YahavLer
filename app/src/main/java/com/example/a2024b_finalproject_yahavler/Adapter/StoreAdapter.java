@@ -47,7 +47,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         Store store = getItem(position);
         ImageLoader.init(context);
-        ImageLoader.getInstance().load(store.getLogo(), holder.storeLogo);
+        ImageLoader.getInstance().loadImage(store.getLogo(), holder.storeLogo);
         holder.storeName.setText(store.getName());
         holder.branchesLocations.setText(String.join("Branches: ", store.getBranchesLocations()));
         holder.storeClubs.setText(String.join("Accepted Clubs: ", store.getAcceptedClubs()));

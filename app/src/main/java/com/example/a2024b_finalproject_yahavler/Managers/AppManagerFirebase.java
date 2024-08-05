@@ -83,32 +83,19 @@ public class AppManagerFirebase {
 
     public static void addClubToUser(String clubId) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference usersRef = database.getReference("users");
-
         usersRef.child(userUid).child("clubMemberships").child(clubId).setValue("1");
     }
     public static void isClubOfUser(String clubId, CallBack<Boolean> callBack) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference usersRef = database.getReference("users");
-
         usersRef.child(userUid).child("clubMemberships").child(clubId).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Integer result = snapshot.getValue(Integer.class);
-//                if (result != null  &&   result > 0) {
-//                    callBack.res(true);
-//                } else{
-//                    callBack.res(false);
-//                }
-//            }
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String result = snapshot.getValue(String.class);
-                callBack.res(result != null && result.equals("1"));
+                Integer result = snapshot.getValue(Integer.class);
+                if (result != null  &&   result > 0) {
+                    callBack.res(true);
+                } else{
+                    callBack.res(false);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
