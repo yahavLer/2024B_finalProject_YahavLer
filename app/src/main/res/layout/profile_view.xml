@@ -107,17 +107,30 @@
         android:id="@+id/btn_favorite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Favorite"
+        android:text="My Favorite"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/profile_details"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_clubs"
+        app:layout_constraintWidth_percent="0.4"
+        android:layout_marginHorizontal="8dp"/>
+
+    <!-- כפתור מועדונים -->
+    <Button
+        android:id="@+id/btn_clubs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="My Clubs"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/profile_details"
+        app:layout_constraintStart_toEndOf="@id/btn_favorite"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp"/>
+        app:layout_constraintWidth_percent="0.4"
+        android:layout_marginHorizontal="8dp"/>
 
     <!-- רשימת מועדונים -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/clubs_recycler_view"
+        android:id="@+id/UserClub_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
@@ -127,6 +140,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/club_details_item" />
 
+    <!-- רשימת מועדפים -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorites_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_favorite"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/store_item_object"
+        android:visibility="invisible"/>
     <!-- סרגל ניווט תחתון -->
     <include layout="@layout/buttom_menu"
         android:id="@+id/bottom_navigation"

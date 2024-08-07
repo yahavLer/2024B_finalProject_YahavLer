@@ -88,15 +88,22 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         saveButton = findViewById(R.id.save_button);
     }
 
-    private void initAllClubs(){
-        clubs = ClubManager.getClub();
-        ClubAdapter clubAdapter = new ClubAdapter(clubs, this, this);
-        AppManagerFirebase.addAllClubs(clubs);
+    private void initAllClubs() {
+        AppManagerFirebase.fetchAllClubs(new AppManagerFirebase.CallBack<ArrayList<Club>>() {
+            @Override
+            public void res(ArrayList<Club> allClubs) {
+                if (allClubs != null) {
+                    clubs = allClubs;
+                    ClubAdapter clubAdapter = new ClubAdapter(clubs, activity_manage_club.this, activity_manage_club.this);
+                    main_LST_club.setAdapter(clubAdapter);
+                }
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         main_LST_club.setLayoutManager(linearLayoutManager);
-        main_LST_club.setAdapter(clubAdapter);
     }
+
 
     private Date parseDate(String dateStr) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

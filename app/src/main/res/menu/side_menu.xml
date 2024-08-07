@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/nav_profile"
+        android:title="הפרופיל שלי" />
+
+    <item
+        android:id="@+id/nav_favorites"
+        android:title="חנויות שאהבתי" />
+
+    <item
+        android:id="@+id/nav_clubs"
+        android:title="המועדונים שלי" />
+
+</menu>

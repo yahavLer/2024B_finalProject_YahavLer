@@ -13,7 +13,7 @@ public class User {
     private String email;
 
     private HashMap<String, ClubMembership> clubMemberships = new HashMap<>();
-    private HashMap<String, String> favoriteStores = new HashMap<>();
+    private HashMap<String, Integer> favoriteStores = new HashMap<>();
 
     public User() {
     }
@@ -72,21 +72,20 @@ public class User {
         this.clubMemberships = clubMemberships;
     }
 
-    public HashMap<String, String> getFavoriteStores() {
+    public HashMap<String, Integer> getFavoriteStores() {
         return favoriteStores;
     }
 
-    public void setFavorites(HashMap<String, String> favoriteStores) {
+    public void setFavorites(HashMap<String, Integer> favoriteStores) {
         this.favoriteStores = favoriteStores;
     }
 
     public User addFavorite(String storeId) {
-        this.favoriteStores.put(storeId, "1");
+        this.favoriteStores.put(storeId, 1);
         return this;
     }
 
     public void addClubMembership(ClubMembership membership) {
         clubMemberships.put(membership.getClubId(), membership);
     }
-
 }

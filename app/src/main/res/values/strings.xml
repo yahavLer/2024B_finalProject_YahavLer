@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">2024B_finalProject_YahavLer</string>
-
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
     <string-array name="clubs_membership">
         <item>Select Club Membership</item>
         <item>Club 1</item>

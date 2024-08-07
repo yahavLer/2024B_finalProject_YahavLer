@@ -40,11 +40,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_view);
         findView();
-        initAllStores();
-        initAllClubs();
+        AppManagerFirebase.clearFirebaseData();
+
+        AppManagerFirebase.initStoresFirebaseData();
+        AppManagerFirebase.initClubsFirebaseData();
 
         // Load data from Firebase
-        AppManagerFirebase.loadDataFromFirebase();
+//        AppManagerFirebase.loadDataFromFirebase();
         setBtnClick();
     }
 
@@ -70,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void initAllStores(){
-        stores = StoreManager.getStores();
-        AppManagerFirebase.addAllStores(stores);
-    }
-    private void initAllClubs(){
-        clubs = ClubManager.getClub();
-        AppManagerFirebase.addAllClubs(clubs);
-    }
+//    private void initAllStores(){
+//        stores = StoreManager.getStores();
+//        AppManagerFirebase.addAllStores(stores);
+//    }
+//    private void initAllClubs(){
+//        clubs = ClubManager.getClub();
+//        AppManagerFirebase.addAllClubs(clubs);
+//    }
 
     @Override
     protected void onPause() {
@@ -98,4 +100,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Lifecycle", "onDestroy called");
         // Clean up any resources here
     }
+
+
 }

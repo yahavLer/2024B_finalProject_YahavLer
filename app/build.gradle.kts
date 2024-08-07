@@ -54,4 +54,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //Glide:
     implementation (libs.glide)
+    implementation ("com.google.android.material:material:1.3.0-alpha03")
+
+    implementation ("com.google.android.material:material:1.9.0") // Material Components
+    implementation ("androidx.drawerlayout:drawerlayout:1.1.1")   // DrawerLayout
+
 }

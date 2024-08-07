@@ -4,12 +4,16 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.a2024b_finalproject_yahavler.Callback.StoreCallback;
+import com.example.a2024b_finalproject_yahavler.DataManagers.ClubManager;
+import com.example.a2024b_finalproject_yahavler.DataManagers.StoreManager;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,13 +22,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class AppManagerFirebase {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();;
     private static DatabaseReference clubsRef = database.getReference("clubs");
     private static DatabaseReference usersRef = database.getReference("users");
     private static DatabaseReference storesRef = database.getReference("stores");
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static FirebaseUser currentUser = mAuth.getCurrentUser();
+
+    public static FirebaseUser getCurrentUser() {
+        return currentUser;
+    }
 
     public static FirebaseDatabase getDatabase() {
         return database;
@@ -41,6 +51,7 @@ public class AppManagerFirebase {
     public static DatabaseReference getStoresRef() {
         return storesRef;
     }
+
     public interface CallBack<T> {
         void res(T res);
     }
@@ -60,19 +71,78 @@ public class AppManagerFirebase {
     }
 
     public static void addFavoriteStoreToUser(String storeId) {
-        String userId = FirebaseAuth.getInstance().getUid();
-        if (userId != null) {
-            usersRef.child(userId).child("favoriteStores").child(storeId).setValue(1);        }
+        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (userUid != null) {
+            usersRef.child(userUid).child("favoriteStores").child(storeId).setValue(1);        }
     }
 
-    public static void isStoreIsFav(String storeId, CallBack<Boolean> callBack) {
-        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        usersRef.child(userUid).child("favoriteStores").child(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void fetchUserFavoriteStores(String userId, CallBack<ArrayList<Store>> callback) {
+        usersRef.child(userId).child("favoriteStores").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String result = snapshot.getValue(String.class);
-                callBack.res(result != null && result.equals("1"));
+                ArrayList<String> favoriteStoreIds = new ArrayList<>();
+                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+                    String storeId = storeSnapshot.getKey();
+                    if (storeId != null) {
+                        favoriteStoreIds.add(storeId);
+                    }
+                }
+
+                if (favoriteStoreIds.isEmpty()) {
+                    callback.res(new ArrayList<>()); // No favorite stores found
+                    return;
+                }
+
+                ArrayList<Store> favoriteStores = new ArrayList<>();
+                // Fetch store data for each store ID
+                fetchStoresByIds(favoriteStoreIds, favoriteStores, callback);
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null);
+            }
+        });
+    }
+    private static void fetchStoresByIds(ArrayList<String> storeIds, ArrayList<Store> favoriteStores, CallBack<ArrayList<Store>> callback) {
+        final int totalStores = storeIds.size();
+        final int[] fetchedStoresCount = {0};
+
+        for (String storeId : storeIds) {
+            fetchStoreById(storeId, store -> {
+                if (store != null) {
+                    favoriteStores.add(store);
+                }
+                // Check if all stores have been fetched
+                fetchedStoresCount[0]++;
+                if (fetchedStoresCount[0] == totalStores) {
+                    callback.res(favoriteStores);
+                }
+            });
+        }
+
+        // Handle case where no stores are fetched
+        if (storeIds.isEmpty()) {
+            callback.res(new ArrayList<>());
+        }
+    }
+
+    public static void fetchFavoriteStores(String userId, StoreCallback callback) {
+        DatabaseReference userFavoritesRef = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(userId)
+                .child("favoriteStores");
+
+        userFavoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> favoriteStores = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    favoriteStores.add(dataSnapshot.getValue(String.class));
+                }
+                callback.onFavoriteStoresFetched(favoriteStores); // קריאה למתודה החדשה
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors
@@ -80,11 +150,42 @@ public class AppManagerFirebase {
         });
     }
 
+    public static void fetchStoreById(String storeId, CallBack<Store> callback) {
+        DatabaseReference storeRef = FirebaseDatabase.getInstance().getReference("stores").child(storeId);
+        storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Store store = snapshot.getValue(Store.class);
+                callback.res(store);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null);
+            }
+        });
+    }
+
+    public static void fetchUserById(String userId, CallBack<User> callback) {
+        usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                callback.res(user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null);
+            }
+        });
+    }
 
     public static void addClubToUser(String clubId) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         usersRef.child(userUid).child("clubMemberships").child(clubId).setValue("1");
     }
+
     public static void isClubOfUser(String clubId, CallBack<Boolean> callBack) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         usersRef.child(userUid).child("clubMemberships").child(clubId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,7 +215,6 @@ public class AppManagerFirebase {
         usersRef.child(userUid).child("clubMemberships").child(clubId).removeValue();
     }
 
-
     public static void addClubMembership(ClubMembership membership, String userId, OnSuccessListener<Boolean> listener) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
         userRef.child("clubMemberships").child(membership.getClubId()).setValue(membership)
@@ -123,20 +223,21 @@ public class AppManagerFirebase {
                 });
     }
 
-
-    public static void getUserName(String userId, CallBack<String> callBack) {
+    public static void fetchUserName(String userId, CallBack<String> callBack) {
         usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
                     callBack.res(user.getUsername());
+                } else {
+                    callBack.res(null);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
+                callBack.res(null);
             }
         });
     }
@@ -161,6 +262,7 @@ public class AppManagerFirebase {
             }
         });
     }
+
     public static void getClub(String clubId, ClubCallback callback) {
         DatabaseReference clubRef = FirebaseDatabase.getInstance().getReference("clubs").child(clubId);
         clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -181,47 +283,90 @@ public class AppManagerFirebase {
     public interface ClubCallback {
         void onClubLoaded(Club club);
     }
-    public static void loadDataFromFirebase() {
-        // Load Clubs
-        clubsRef.addValueEventListener(new ValueEventListener() {
+
+    public static void fetchAllStores(CallBack<ArrayList<Store>> callback) {
+        storesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Handle data here
-                Map<String, Object> clubsData = new HashMap<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    clubsData.put(snapshot.getKey(), snapshot.getValue());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Store> allStores = new ArrayList<>();
+                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+                    Store store = storeSnapshot.getValue(Store.class);
+                    if (store != null) {
+                        allStores.add(store);
+                    }
                 }
-                // Store data locally or update UI
-                Log.d("Firebase", "Clubs data loaded: " + clubsData);
-                // Example: Toast.makeText(MainActivity.this, "Clubs data loaded", Toast.LENGTH_SHORT).show();
+                callback.res(allStores);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle possible errors
-                Log.e("Firebase", "Failed to load clubs data.", databaseError.toException());
-            }
-        });
-
-        // Load Stores
-        storesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Handle data here
-                Map<String, Object> storesData = new HashMap<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    storesData.put(snapshot.getKey(), snapshot.getValue());
-                }
-                // Store data locally or update UI
-                Log.d("Firebase", "Stores data loaded: " + storesData);
-                // Example: Toast.makeText(MainActivity.this, "Stores data loaded", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle possible errors
-                Log.e("Firebase", "Failed to load stores data.", databaseError.toException());
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null);
             }
         });
     }
+
+    public static void fetchAllClubs(CallBack<ArrayList<Club>> callback) {
+        clubsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Club> allClubs = new ArrayList<>();
+                for (DataSnapshot clubSnapshot : snapshot.getChildren()) {
+                    Club club = clubSnapshot.getValue(Club.class);
+                    if (club != null) {
+                        allClubs.add(club);
+                    }
+                }
+                callback.res(allClubs);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null);
+            }
+        });
+    }
+
+    public static void clearFirebaseData() {
+        storesRef.removeValue();
+        clubsRef.removeValue();
+    }
+
+    public static void initStoresFirebaseData() {
+        storesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    // Data doesn't exist, upload it
+                    addAllStores(StoreManager.getStores());
+                } else {
+                    Log.d("Firebase", "Data already exists, skipping initialization.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
+    public static void initClubsFirebaseData() {
+        clubsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    // Data doesn't exist, upload it
+                    addAllClubs(ClubManager.getClub());
+                } else {
+                    Log.d("Firebase", "Clubs data already exists, skipping initialization.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+    }
+
 }

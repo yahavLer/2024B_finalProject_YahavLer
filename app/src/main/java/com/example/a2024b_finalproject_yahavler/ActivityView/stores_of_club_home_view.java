@@ -38,7 +38,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
     private ArrayList<Store> stores = new ArrayList<>();
     private ArrayList<Store> filteredStores = new ArrayList<>();
     private Set<String> userStoreIds = new HashSet<>();
-
+    private FirebaseUser currentUser;
     private TextView welcome_text;
     private DatabaseReference userDatabaseRef;
     private SearchView search_text;
@@ -50,6 +50,8 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stores_of_club_home_view);
         findView();
+        currentUser=AppManagerFirebase.getCurrentUser();
+
         initAllStores();
         setupSearchFunctionality();  // Add this method call
         NevigationActivity.findNevigationButtens(this);
@@ -94,32 +96,38 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         search_button = findViewById(R.id.search_button);
     }
 
-    private void initAllStores(){
-        stores = StoreManager.getStores();
-        filteredStores.addAll(stores);
-//        storeAdapter = new StoreAdapter(stores, this);
-        storeAdapter = new StoreAdapter(filteredStores, this);
-        AppManagerFirebase.addAllStores(stores);
+    private void initAllStores() {
+        AppManagerFirebase.fetchAllStores(new AppManagerFirebase.CallBack<ArrayList<Store>>() {
+            @Override
+            public void res(ArrayList<Store> allStores) {
+                if (allStores != null) {
+                    stores = allStores;
+                    filteredStores.clear();
+                    filteredStores.addAll(stores);
+                    storeAdapter.notifyDataSetChanged();
+                }
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         main_LST_store.setLayoutManager(linearLayoutManager);
+        storeAdapter = new StoreAdapter(filteredStores, this, currentUser.getUid());
         main_LST_store.setAdapter(storeAdapter);
     }
 
+
+
+
     private void fetchUserName() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        userDatabaseRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        AppManagerFirebase.fetchUserName(userId, new AppManagerFirebase.CallBack<String>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user != null) {
-                    welcome_text.setText("Welcome, " + user.getUsername());
+            public void res(String username) {
+                if (username != null) {
+                    welcome_text.setText("Welcome, " + username);
+                } else {
+                    // Handle the case where the username is null
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
             }
         });
     }

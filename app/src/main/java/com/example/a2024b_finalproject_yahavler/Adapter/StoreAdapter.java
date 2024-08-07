@@ -15,26 +15,45 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
+import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
 import com.example.a2024b_finalproject_yahavler.Callback.StoreCallback;
 import com.example.a2024b_finalproject_yahavler.ActivityView.activity_club_accepted_by_store;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHolder> {
     private Context context;
     private List<Store> storeList;
     private StoreCallback storeCallback;
-
-    public StoreAdapter(List<Store> storeList, Context context) {
+    private String userId;
+    private HashMap<String, Integer> favoriteStoreIds = new HashMap<>();
+    private User user = new User();
+    public StoreAdapter(List<Store> storeList, Context context, String userId) {
         this.storeList = storeList;
         this.context = context;
+        this.userId=userId;
+        fetchUserFavoriteStores();
     }
-
+    private void fetchUserFavoriteStores() {
+        AppManagerFirebase.fetchUserById(userId, fetchedUser -> {
+            if (fetchedUser != null) {
+                this.user = fetchedUser;
+                this.favoriteStoreIds = user.getFavoriteStores();
+                notifyDataSetChanged(); // Notify the adapter to refresh data
+            }
+        });
+    }
     public void setStoreCallback(StoreCallback storeCallback) {
         this.storeCallback = storeCallback;
     }
+
+
 
     @NonNull
     @Override
@@ -46,31 +65,43 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         Store store = getItem(position);
+        setupStoreDetails(holder, store);
+        setupFavoriteButton(holder, store);
+        setupClickListeners(holder, store, position);
+    }
+
+    private void setupStoreDetails(@NonNull StoreViewHolder holder, Store store) {
         ImageLoader.init(context);
         ImageLoader.getInstance().loadImage(store.getLogo(), holder.storeLogo);
         holder.storeName.setText(store.getName());
         holder.branchesLocations.setText(String.join("Branches: ", store.getBranchesLocations()));
         holder.storeClubs.setText(String.join("Accepted Clubs: ", store.getAcceptedClubs()));
+    }
 
-        if (store.isFavorite())
+    private void setupFavoriteButton(@NonNull StoreViewHolder holder, Store store) {
+        if (favoriteStoreIds.containsKey(store.getStoreId()))
             holder.favoriteButton.setImageResource(R.drawable.heart);
         else
             holder.favoriteButton.setImageResource(R.drawable.empty_heart);
+    }
 
+    private void setupClickListeners(@NonNull StoreViewHolder holder, Store store, int position) {
         holder.favoriteButton.setOnClickListener(v -> {
             if (storeCallback != null) {
                 storeCallback.favoriteButtonClicked(store, position);
             }
-            if (store.isFavorite()) {
+            if (favoriteStoreIds.containsKey(store.getStoreId())) {
                 // Remove from favorites
                 AppManagerFirebase.removeStoreFromFavorites(store.getStoreId());
+                favoriteStoreIds.remove(store.getStoreId());
             } else {
                 // Add to favorites
                 AppManagerFirebase.addFavoriteStoreToUser(store.getStoreId());
+                favoriteStoreIds.put(store.getStoreId(), 1); // Add to local map
             }
             store.setFavorite(!store.isFavorite());
             notifyItemChanged(position); // Update the item view
-            });
+        });
         holder.itemView.setOnClickListener(v -> {
             if (storeCallback != null) {
                 storeCallback.onStoreClick(store);
@@ -80,8 +111,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             context.startActivity(intent);
         });
     }
-
-
     @Override
     public int getItemCount() {
         if (storeList == null)
