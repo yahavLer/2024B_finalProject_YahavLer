@@ -51,7 +51,6 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         setContentView(R.layout.stores_of_club_home_view);
         findView();
         currentUser=AppManagerFirebase.getCurrentUser();
-
         initAllStores();
         setupSearchFunctionality();  // Add this method call
         NevigationActivity.findNevigationButtens(this);
@@ -114,9 +113,6 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         storeAdapter = new StoreAdapter(filteredStores, this, currentUser.getUid());
         main_LST_store.setAdapter(storeAdapter);
     }
-
-
-
 
     private void fetchUserName() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

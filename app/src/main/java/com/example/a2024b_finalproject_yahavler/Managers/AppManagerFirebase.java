@@ -209,6 +209,7 @@ public class AppManagerFirebase {
                 .addOnCompleteListener(task -> {
                     listener.onSuccess(task.isSuccessful());
                 });
+
     }
 
     public static void fetchUserName(String userId, CallBack<String> callBack) {

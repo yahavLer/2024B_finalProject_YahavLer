@@ -2,37 +2,57 @@ package com.example.a2024b_finalproject_yahavler.Adapter;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.Callback.ManageClubCallback;
+import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
+import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
+import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
+import com.example.a2024b_finalproject_yahavler.interfaces.OnClubSaveListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder> {
     private Context context;
     private List<Club> clubList;
-    private OnClubClickListener onClubClickListener;
+    private ManageClubCallback manageClubCallback;
     private String selectedClubId = "";
+    private String curUserIdFire;
+    private User user = new User();
+    private OnClubSaveListener onClubSaveListener;
 
-    public ClubAdapter(List<Club> clubList, Context context, OnClubClickListener onClubClickListener) {
+    public ClubAdapter(List<Club> clubList, Context context, String curUserIdFire) {
         this.clubList = clubList;
         this.context = context;
-        this.onClubClickListener = onClubClickListener;
+        this.curUserIdFire =curUserIdFire;
+    }
+    // הגדרת ה-Listener
+    public void setOnClubSaveListener(OnClubSaveListener listener){
+        this.onClubSaveListener = listener;
+    }
+    public void setClubClickListener(ManageClubCallback manageClubCallback)  {
+        this.manageClubCallback=manageClubCallback;
     }
 
     @NonNull
@@ -41,17 +61,22 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.club_item_object, parent, false);
         return new ClubViewHolder(view);
     }
-    public interface OnClubClickListener {
-        void onClubClick(Club club);
-        void onSaveClubMembership(String clubId, String cardNumber, String expiryDate);
-    }
+
     @Override
     public void onBindViewHolder(@NonNull ClubViewHolder holder, int position) {
-        Club club = clubList.get(position);
+        Club club = getItem(position);
+        setupClubDetails(holder, club);
+        setupClickListeners(holder, club, position);
+    }
+
+    private void setupClubDetails(@NonNull ClubViewHolder holder, Club club) {
+        ImageLoader.init(context);
         holder.clubName.setText(club.getName());
         ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
         holder.CV_club_details.setVisibility(View.GONE);
-        selectedClubId = club.getClubId(); // עדכון ה-clubId
+    }
+
+    private void setupClickListeners(@NonNull ClubViewHolder holder, Club club, int position) {
         holder.btnAddClub.setOnClickListener(v -> {
             if(holder.CV_club_details.getVisibility() == View.VISIBLE){
                 holder.CV_club_details.setVisibility(View.GONE);
@@ -59,18 +84,47 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
                 holder.CV_club_details.setVisibility(View.VISIBLE);
             }
         });
+        holder.ET_ClubExpiryDate.setOnClickListener(v -> showDatePickerDialog(holder.ET_ClubExpiryDate));
         holder.saveButton.setOnClickListener(v -> {
-            if (onClubClickListener != null) {
-                onClubClickListener.onSaveClubMembership(
+            selectedClubId = club.getClubId();// עדכון ה-clubId
+            Log.e("selectedClubId",selectedClubId);
+            if (manageClubCallback != null) {
+                Log.e("selectedClubId ! = null",selectedClubId);
+                manageClubCallback.onSaveClubMembership(
                         selectedClubId,
-                        holder.tvClubCardNumber.getText().toString(),
-                        holder.tvClubExpiryDate.getText().toString()
+                        holder.ET_ClubCardNumber.getText().toString(),
+                        holder.ET_ClubExpiryDate.getText().toString()
                 );
+                saveClubMembership( selectedClubId,
+                        holder.ET_ClubCardNumber.getText().toString(),
+                        holder.ET_ClubExpiryDate.getText().toString());
             }
         });
-        holder.tvClubExpiryDate.setOnClickListener(v -> showDatePickerDialog(holder.tvClubExpiryDate));
     }
-    private void showDatePickerDialog(TextView tvClubExpiryDate) {
+
+    public void saveClubMembership(String clubId, String cardNumber, String expiryDate) {
+        Log.e("saveClubMembership",selectedClubId);
+        Date parsedExpiryDate = null;
+        try {
+            parsedExpiryDate = new SimpleDateFormat("MM/yyyy", Locale.getDefault()).parse(expiryDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+        // יצירת ה-ClubMembership החדש
+        ClubMembership newMembership = new ClubMembership(curUserIdFire, clubId, cardNumber, parsedExpiryDate);
+        user.addClubMembership(newMembership);
+        // עדכון רשימת החברות של המשתמש ב-Firebase
+        AppManagerFirebase.addClubMembership(newMembership, curUserIdFire, success -> {
+            if (success) {
+                Toast.makeText(context, "Club added successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Failed to update club membership", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showDatePickerDialog(EditText ET_ClubExpiryDate) {
         // Get the current date
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -83,15 +137,27 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     // Format the selected date (you can customize this format)
                     String formattedDate = String.format(Locale.getDefault(), "%02d/%d", selectedMonth + 1, selectedYear);
-                    tvClubExpiryDate.setText(formattedDate);
+                    ET_ClubExpiryDate.setText(formattedDate);
                 },
                 year, month, day);
         datePickerDialog.show();
     }
-
+    private Date parseDate(String dateStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            return dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     @Override
     public int getItemCount() {
         return clubList.size();
+    }
+
+    public Club getItem(int position) {
+        return clubList.get(position);
     }
 
     public static class ClubViewHolder extends RecyclerView.ViewHolder {
@@ -100,8 +166,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
         ImageButton btnAddClub;
         CardView CV_club_details;
         Button saveButton;
-        TextView tvClubCardNumber;
-        TextView tvClubExpiryDate;
+        EditText ET_ClubCardNumber, ET_ClubExpiryDate;
         public ClubViewHolder(@NonNull View itemView) {
             super(itemView);
             clubName = itemView.findViewById(R.id.club_name);
@@ -109,8 +174,8 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
             btnAddClub = itemView.findViewById(R.id.btn_add_club);
             CV_club_details = itemView.findViewById(R.id.CV_club_details);
             saveButton = itemView.findViewById(R.id.save_button);
-            tvClubCardNumber = itemView.findViewById(R.id.TV_club_card_number);
-            tvClubExpiryDate = itemView.findViewById(R.id.TV_club_expiry_date);
+            ET_ClubCardNumber = itemView.findViewById(R.id.ET_club_card_number);
+            ET_ClubExpiryDate = itemView.findViewById(R.id.ET_club_expiry_date);
             CV_club_details.setVisibility(View.GONE);
         }
     }

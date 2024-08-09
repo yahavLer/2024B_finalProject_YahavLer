@@ -96,7 +96,7 @@
             android:layout_marginEnd="@dimen/data_end_margin">
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/TV_club_card_number"
+                android:id="@+id/ET_club_card_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/data_end_margin"
@@ -109,16 +109,15 @@
                 tools:text="Card Number" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/TV_club_expiry_date"
+                android:id="@+id/ET_club_expiry_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/TV_club_card_number"
+                android:layout_below="@id/ET_club_card_number"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
                 android:hint="Expiry Date (MM/yyyy)"
                 android:inputType="none"
-                android:focusable="false"
                 android:maxLines="1"
                 android:minLines="1"
                 android:textSize="@dimen/data_text_size"
@@ -128,7 +127,7 @@
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/TV_club_expiry_date"
+                android:layout_below="@id/ET_club_expiry_date"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
                 android:text="Save" />

@@ -6,5 +6,5 @@ import java.util.List;
 public interface StoreCallback {
     void favoriteButtonClicked(Store store, int position);
     void onStoreClick(Store store);
-    void onFavoriteStoresFetched(List<String> favoriteStores); // הוספת המתודה החדשה
+    void onFavoriteStoresFetched(List<String> favoriteStores);
 }

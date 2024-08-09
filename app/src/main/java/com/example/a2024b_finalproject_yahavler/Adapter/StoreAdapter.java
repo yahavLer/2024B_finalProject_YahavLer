@@ -2,6 +2,7 @@ package com.example.a2024b_finalproject_yahavler.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,7 @@ import com.example.a2024b_finalproject_yahavler.R;
 import com.example.a2024b_finalproject_yahavler.Callback.StoreCallback;
 import com.example.a2024b_finalproject_yahavler.ActivityView.activity_club_accepted_by_store;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,17 +29,17 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     private Context context;
     private List<Store> storeList;
     private StoreCallback storeCallback;
-    private String userId;
+    private String curUserIdFire;
     private HashMap<String, Integer> favoriteStoreIds = new HashMap<>();
     private User user = new User();
-    public StoreAdapter(List<Store> storeList, Context context, String userId) {
+    public StoreAdapter(List<Store> storeList, Context context, String curUserIdFire) {
         this.storeList = storeList;
         this.context = context;
-        this.userId=userId;
+        this.curUserIdFire =curUserIdFire;
         fetchUserFavoriteStores();
     }
     private void fetchUserFavoriteStores() {
-        AppManagerFirebase.fetchUserById(userId, fetchedUser -> {
+        AppManagerFirebase.fetchUserById(curUserIdFire, fetchedUser -> {
             if (fetchedUser != null) {
                 this.user = fetchedUser;
                 this.favoriteStoreIds = user.getFavoriteStores();
@@ -52,8 +50,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     public void setStoreCallback(StoreCallback storeCallback) {
         this.storeCallback = storeCallback;
     }
-
-
 
     @NonNull
     @Override

@@ -13,6 +13,7 @@ import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,12 +28,16 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
     private ArrayList<Club> clubs = new ArrayList<>();
     private TextView storeNameTextView;
     private String storeId;
+    private FirebaseUser currentUser;
+    private DatabaseReference userDatabaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clubs_accepted_by_store);
         findView();
+        currentUser=AppManagerFirebase.getCurrentUser();
+        userDatabaseRef = FirebaseDatabase.getInstance().getReference("users");
         NevigationActivity.findNevigationButtens(this);
         storeId = getIntent().getStringExtra("STORE_ID"); // Get storeId from intent
         fetchStoreData();
@@ -85,17 +90,7 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        clubAdapter = new ClubAdapter(clubs, this, new ClubAdapter.OnClubClickListener() {
-            @Override
-            public void onClubClick(Club club) {
-                // Handle club click
-            }
-
-            @Override
-            public void onSaveClubMembership(String clubId, String cardNumber, String expiryDate) {
-                // Handle saving club membership
-            }
-        });
+        clubAdapter = new ClubAdapter(clubs, this, currentUser.getUid());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(clubAdapter);
     }
