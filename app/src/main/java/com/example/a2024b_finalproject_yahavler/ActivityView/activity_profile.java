@@ -1,9 +1,7 @@
 package com.example.a2024b_finalproject_yahavler.ActivityView;
 
-import com.example.a2024b_finalproject_yahavler.Adapter.ClubAdapter;
 import com.example.a2024b_finalproject_yahavler.Adapter.StoreAdapter;
 import com.example.a2024b_finalproject_yahavler.Adapter.UserClubsAdapter;
-import com.example.a2024b_finalproject_yahavler.DataManagers.ClubManager;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
@@ -30,7 +28,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -51,7 +48,7 @@ public class activity_profile extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Button btnFavorite;
     private Button btnClubs;
-    private String userId;
+    private String curUserIdFire;
     private User user = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,23 +57,33 @@ public class activity_profile extends AppCompatActivity {
         findView();
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
-
         currentUser = AppManagerFirebase.getCurrentUser();
         if (currentUser != null) {
-            userId = currentUser.getUid();
-            Log.d("ProfileActivity", "User ID: " + userId);
-            loadUserProfile(userId);
-            loadUserClubMemberships(userId);
-            loadUserFavStore(userId);
+            curUserIdFire = currentUser.getUid();
+            Log.d("ProfileActivity", "User ID: " + curUserIdFire);
+            loadUserProfile(curUserIdFire);
+            loadUserClubMemberships(curUserIdFire);
+            loadUserFavStore(curUserIdFire);
         }
 
         NevigationActivity.findNevigationButtens(this);
-
-        // Set initial view state
-        showUserClubs(); // Show clubs by default
+        initAdapters();
 
         btnFavorite.setOnClickListener(v -> showFavoriteStores());
         btnClubs.setOnClickListener(v -> showUserClubs());
+    }
+
+    private void initAdapters() {
+        if (favStoreOfUserAdapter == null) {
+            initFavStoreOfUser();
+        } else {
+            favStoreOfUserAdapter.notifyDataSetChanged();
+        }
+        if (userClubsAdapter == null) {
+            initClubOfUser();
+        } else {
+            userClubsAdapter.notifyDataSetChanged();
+        }
     }
 
     private void findView() {
@@ -93,23 +100,11 @@ public class activity_profile extends AppCompatActivity {
     private void showFavoriteStores() {
         clubsRecyclerView.setVisibility(View.INVISIBLE);
         storesRecyclerView.setVisibility(View.VISIBLE);
-        // Ensure that the adapter is initialized and data is loaded
-        if (favStoreOfUserAdapter == null) {
-            initFavStoreOfUser();
-        } else {
-            favStoreOfUserAdapter.notifyDataSetChanged();
-        }
     }
 
     private void showUserClubs() {
         clubsRecyclerView.setVisibility(View.VISIBLE);
         storesRecyclerView.setVisibility(View.INVISIBLE);
-        // Ensure that the adapter is initialized and data is loaded
-        if (userClubsAdapter == null) {
-            initClubOfUser();
-        } else {
-            userClubsAdapter.notifyDataSetChanged();
-        }
     }
 
 

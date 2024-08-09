@@ -70,10 +70,17 @@ public class AppManagerFirebase {
         clubsRef.setValue(allClubs);
     }
 
-    public static void addFavoriteStoreToUser(String storeId) {
-        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        if (userUid != null) {
-            usersRef.child(userUid).child("favoriteStores").child(storeId).setValue(1);        }
+    public static void addFavoriteStoreToUser(String storeId, String userId) {
+        DatabaseReference userRef = usersRef.child(userId);
+        userRef.child("favoriteStores").child(storeId).setValue(1);
+    }
+
+    public static void addClubMembership(ClubMembership membership, String userId, OnSuccessListener<Boolean> listener) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        userRef.child("clubMemberships").child(membership.getClubId()).setValue(membership)
+                .addOnCompleteListener(task -> {
+                    listener.onSuccess(task.isSuccessful());
+                });
     }
 
     public static void fetchUserFavoriteStores(String userId, CallBack<ArrayList<Store>> callback) {
@@ -201,15 +208,6 @@ public class AppManagerFirebase {
     public static void removeClubFromUser(String clubId) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         usersRef.child(userUid).child("clubMemberships").child(clubId).removeValue();
-    }
-
-    public static void addClubMembership(ClubMembership membership, String userId, OnSuccessListener<Boolean> listener) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-        userRef.child("clubMemberships").child(membership.getClubId()).setValue(membership)
-                .addOnCompleteListener(task -> {
-                    listener.onSuccess(task.isSuccessful());
-                });
-
     }
 
     public static void fetchUserName(String userId, CallBack<String> callBack) {

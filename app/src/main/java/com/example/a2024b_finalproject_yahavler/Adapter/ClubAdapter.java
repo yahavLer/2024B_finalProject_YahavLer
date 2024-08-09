@@ -24,7 +24,6 @@ import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
-import com.example.a2024b_finalproject_yahavler.interfaces.OnClubSaveListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,17 +39,13 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     private String selectedClubId = "";
     private String curUserIdFire;
     private User user = new User();
-    private OnClubSaveListener onClubSaveListener;
 
     public ClubAdapter(List<Club> clubList, Context context, String curUserIdFire) {
         this.clubList = clubList;
         this.context = context;
         this.curUserIdFire =curUserIdFire;
     }
-    // הגדרת ה-Listener
-    public void setOnClubSaveListener(OnClubSaveListener listener){
-        this.onClubSaveListener = listener;
-    }
+
     public void setClubClickListener(ManageClubCallback manageClubCallback)  {
         this.manageClubCallback=manageClubCallback;
     }
@@ -88,17 +83,9 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
         holder.saveButton.setOnClickListener(v -> {
             selectedClubId = club.getClubId();// עדכון ה-clubId
             Log.e("selectedClubId",selectedClubId);
-            if (manageClubCallback != null) {
-                Log.e("selectedClubId ! = null",selectedClubId);
-                manageClubCallback.onSaveClubMembership(
-                        selectedClubId,
-                        holder.ET_ClubCardNumber.getText().toString(),
-                        holder.ET_ClubExpiryDate.getText().toString()
-                );
-                saveClubMembership( selectedClubId,
-                        holder.ET_ClubCardNumber.getText().toString(),
-                        holder.ET_ClubExpiryDate.getText().toString());
-            }
+            saveClubMembership( selectedClubId,
+                holder.ET_ClubCardNumber.getText().toString(),
+                holder.ET_ClubExpiryDate.getText().toString());
         });
     }
 

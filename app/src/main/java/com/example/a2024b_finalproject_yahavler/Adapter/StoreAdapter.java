@@ -83,16 +83,15 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
 
     private void setupClickListeners(@NonNull StoreViewHolder holder, Store store, int position) {
         holder.favoriteButton.setOnClickListener(v -> {
-            if (storeCallback != null) {
-                storeCallback.favoriteButtonClicked(store, position);
-            }
             if (favoriteStoreIds.containsKey(store.getStoreId())) {
                 // Remove from favorites
                 AppManagerFirebase.removeStoreFromFavorites(store.getStoreId());
+                user.removeFavorite(store.getStoreId());
                 favoriteStoreIds.remove(store.getStoreId());
             } else {
                 // Add to favorites
-                AppManagerFirebase.addFavoriteStoreToUser(store.getStoreId());
+                AppManagerFirebase.addFavoriteStoreToUser(store.getStoreId(),curUserIdFire);
+                user.addFavorite(store.getStoreId());
                 favoriteStoreIds.put(store.getStoreId(), 1); // Add to local map
             }
             store.setFavorite(!store.isFavorite());

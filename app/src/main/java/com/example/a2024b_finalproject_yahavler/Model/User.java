@@ -85,6 +85,11 @@ public class User {
         return this;
     }
 
+    public User removeFavorite(String storeId) {
+        this.favoriteStores.remove(storeId);
+        return this;
+    }
+
     public void addClubMembership(ClubMembership membership) {
         clubMemberships.put(membership.getClubId(), membership);
     }
