@@ -63,7 +63,6 @@ public class activity_profile extends AppCompatActivity {
             curUserIdFire = currentUser.getUid();
             Log.d("ProfileActivity", "User ID: " + curUserIdFire);
             loadUserProfile();
-
         }
 
         NevigationActivity.findNevigationButtens(this);

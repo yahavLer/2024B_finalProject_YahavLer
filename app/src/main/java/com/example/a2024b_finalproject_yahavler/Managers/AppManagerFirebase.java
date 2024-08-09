@@ -153,7 +153,7 @@ public class AppManagerFirebase {
         });
     }
 
-    private static void fetchStoreById(String storeId, CallBack<Store> callback) {
+    public static void fetchStoreById(String storeId, CallBack<Store> callback) {
         storesRef.child(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -316,6 +316,29 @@ public class AppManagerFirebase {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 callback.res(null);
+            }
+        });
+    }
+    public static void fetchClubsAcceptedByStore(String storeId, CallBack<ArrayList<Club>> callback) {
+        DatabaseReference storeRef = storesRef.child(storeId).child("acceptedClubs");
+        storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Club> clubs = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String clubId = dataSnapshot.getKey();
+                    getClub(clubId, club -> {
+                        if (club != null) {
+                            clubs.add(club);
+                        }
+                        callback.res(clubs);
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null); // החזרת ערך null במקרה של ביטול או שגיאה
             }
         });
     }

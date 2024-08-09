@@ -51,12 +51,13 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         setContentView(R.layout.stores_of_club_home_view);
         findView();
         currentUser=AppManagerFirebase.getCurrentUser();
-        initAllStores();
         setupSearchFunctionality();  // Add this method call
         NevigationActivity.findNevigationButtens(this);
         userDatabaseRef = FirebaseDatabase.getInstance().getReference("users");
         fetchUserName();
+        initAllStores();
     }
+
 
     private void setupSearchFunctionality() {
         search_text.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -100,7 +101,8 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
             @Override
             public void res(ArrayList<Store> allStores) {
                 if (allStores != null) {
-                    stores = allStores;
+                    stores.clear();
+                    stores.addAll(allStores);
                     filteredStores.clear();
                     filteredStores.addAll(stores);
                     storeAdapter.notifyDataSetChanged();
@@ -115,17 +117,19 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
     }
 
     private void fetchUserName() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        AppManagerFirebase.fetchUserName(userId, new AppManagerFirebase.CallBack<String>() {
-            @Override
-            public void res(String username) {
-                if (username != null) {
-                    welcome_text.setText("Welcome, " + username);
-                } else {
-                    // Handle the case where the username is null
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            AppManagerFirebase.fetchUserName(userId, new AppManagerFirebase.CallBack<String>() {
+                @Override
+                public void res(String username) {
+                    if (username != null) {
+                        welcome_text.setText("Welcome, " + username);
+                    } else {
+                        // Handle the case where the username is null
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
