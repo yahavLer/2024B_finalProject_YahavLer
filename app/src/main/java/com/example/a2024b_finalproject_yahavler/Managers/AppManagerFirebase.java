@@ -82,39 +82,47 @@ public class AppManagerFirebase {
                     listener.onSuccess(task.isSuccessful());
                 });
     }
-
-    public static void fetchUserFavoriteStores(String userId, CallBack<ArrayList<Store>> callback) {
-        usersRef.child(userId).child("favoriteStores").addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void fetchFavoriteStores(ArrayList<String> favStoreIdList, CallBack<ArrayList<Store>> callback) {
+        ArrayList<Store> allFavStores = new ArrayList<>();
+        storesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> favoriteStoreIds = new ArrayList<>();
-                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    String storeId = storeSnapshot.getKey();
-                    if (storeId != null) {
-                        favoriteStoreIds.add(storeId);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot storeSnapshot : dataSnapshot.getChildren()) {
+                    Store store = storeSnapshot.getValue(Store.class);
+                    Log.d("initUserFavStores", "favoriteStores: " + store.getStoreId());
+                    if (store != null && favStoreIdList.contains(store.getStoreId())) {
+                        allFavStores.add(store);
                     }
                 }
+                // החזרת הרשימה של החנויות דרך הקולבק
+                callback.res(allFavStores);
+            }
 
-                if (favoriteStoreIds.isEmpty()) {
-                    callback.res(new ArrayList<>()); // No favorite stores found
-                    return;
-                }
-
-                ArrayList<Store> favoriteStores = new ArrayList<>();
-                // Fetch store data for each store ID
-                for (String storeId : favoriteStoreIds) {
-                    fetchStoreById(storeId, store -> {
-                        if (store != null) {
-                            favoriteStores.add(store);
-                        }
-                        // Check if all stores have been fetched
-                        if (favoriteStores.size() == favoriteStoreIds.size()) {
-                            callback.res(favoriteStores);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // טיפול בשגיאה במקרה של ביטול או כישלון
+            }
+        });
+    }
+    public static void fetchUserFavoriteStores(String userId, CallBack<ArrayList<Store>> callback) {
+        DatabaseReference userRef = usersRef.child(userId);
+        DatabaseReference favUserRef = userRef.child("favoriteStores");
+        favUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Store> allStores = new ArrayList<>();
+                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+                    String favStoreId = storeSnapshot.getKey();
+                    fetchStoreById(favStoreId,fetchedStore -> {
+                        if (fetchedStore != null) {
+                            Store favStore = new Store();
+                            favStore = fetchedStore;
+                            allStores.add(favStore);
                         }
                     });
                 }
+                callback.res(allStores);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 callback.res(null);
@@ -146,8 +154,7 @@ public class AppManagerFirebase {
     }
 
     private static void fetchStoreById(String storeId, CallBack<Store> callback) {
-        DatabaseReference storeRef = FirebaseDatabase.getInstance().getReference("stores").child(storeId);
-        storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        storesRef.child(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Store store = snapshot.getValue(Store.class);

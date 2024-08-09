@@ -32,24 +32,25 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class activity_profile extends AppCompatActivity {
-    private TextView EDT_Hello;
-    private TextView EDT_username;
-    private TextView EDT_email;
-    private TextView EDT_phone;
+    private TextView EDT_Hello, EDT_username, EDT_email, EDT_phone;
     private ImageView profileImage;
+    private RecyclerView clubsRecyclerView, storesRecyclerView;
+    private Button btnFavorite,btnClubs ;
+
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private RecyclerView clubsRecyclerView;
-    private UserClubsAdapter userClubsAdapter;
-    private ArrayList<ClubMembership> clubMembershipsList = new ArrayList<>();
-    private RecyclerView storesRecyclerView;
-    private StoreAdapter favStoreOfUserAdapter ;
-    private ArrayList<Store> favStoreList = new ArrayList<>();
     private FirebaseUser currentUser;
-    private Button btnFavorite;
-    private Button btnClubs;
-    private String curUserIdFire;
     private User user = new User();
+
+    private UserClubsAdapter userClubsAdapter;
+    private StoreAdapter favStoreOfUserAdapter ;
+
+    private ArrayList<ClubMembership> clubMembershipsList = new ArrayList<>();
+    private ArrayList<Store> favStoreList = new ArrayList<>();
+    private ArrayList<String> favStoreIdList ;
+
+    private String curUserIdFire;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,30 +62,17 @@ public class activity_profile extends AppCompatActivity {
         if (currentUser != null) {
             curUserIdFire = currentUser.getUid();
             Log.d("ProfileActivity", "User ID: " + curUserIdFire);
-            loadUserProfile(curUserIdFire);
-            loadUserClubMemberships(curUserIdFire);
-            loadUserFavStore(curUserIdFire);
+            loadUserProfile();
+
         }
 
         NevigationActivity.findNevigationButtens(this);
-        initAdapters();
 
         btnFavorite.setOnClickListener(v -> showFavoriteStores());
         btnClubs.setOnClickListener(v -> showUserClubs());
     }
 
-    private void initAdapters() {
-        if (favStoreOfUserAdapter == null) {
-            initFavStoreOfUser();
-        } else {
-            favStoreOfUserAdapter.notifyDataSetChanged();
-        }
-        if (userClubsAdapter == null) {
-            initClubOfUser();
-        } else {
-            userClubsAdapter.notifyDataSetChanged();
-        }
-    }
+
 
     private void findView() {
         EDT_Hello = findViewById(R.id.Hello);
@@ -107,32 +95,34 @@ public class activity_profile extends AppCompatActivity {
         storesRecyclerView.setVisibility(View.INVISIBLE);
     }
 
-
-    private void initFavStoreOfUser(){
-        storesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        favStoreOfUserAdapter = new StoreAdapter(favStoreList, this, currentUser.getUid());
-        storesRecyclerView.setAdapter(favStoreOfUserAdapter);
-    }
-
-    private void loadUserFavStore(String userId) {
-        AppManagerFirebase.fetchUserFavoriteStores(userId, favoriteStores -> {
-            if (favoriteStores != null) {
-                Log.d("ProfileActivity", "Fetching favorite stores.");
-                favStoreList.clear();
-                favStoreList.addAll(favoriteStores);
-                if (favStoreOfUserAdapter == null) {
-                    initFavStoreOfUser();
-                } else {
+    private void initUserFavStores(ArrayList<String>favStoreIdList) {
+        AppManagerFirebase.fetchFavoriteStores(favStoreIdList, new AppManagerFirebase.CallBack<ArrayList<Store>>() {
+            @Override
+            public void res(ArrayList<Store> favoriteStores) {
+                if (favoriteStores != null) {
+                    Log.d("initUserFavStores", "favoriteStores: " + favoriteStores.toString());
+                    favStoreList.addAll(favoriteStores);
                     favStoreOfUserAdapter.notifyDataSetChanged();
                 }
             }
         });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        storesRecyclerView.setLayoutManager(linearLayoutManager);
+        favStoreOfUserAdapter = new StoreAdapter(favStoreList, this, currentUser.getUid());
+        storesRecyclerView.setAdapter(favStoreOfUserAdapter);
     }
 
+
     private void initClubOfUser() {
-        clubsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        userClubsAdapter = new UserClubsAdapter(clubMembershipsList);
-        clubsRecyclerView.setAdapter(userClubsAdapter);
+        if (userClubsAdapter == null) {
+            Log.d("initClubOfUser", "clubMembershipsList: " + clubMembershipsList.toString());
+            clubsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            userClubsAdapter = new UserClubsAdapter(clubMembershipsList);
+            clubsRecyclerView.setAdapter(userClubsAdapter);
+        } else {
+            userClubsAdapter.notifyDataSetChanged();
+        }
     }
 
     private void loadUserClubMemberships(String userId) {
@@ -140,6 +130,7 @@ public class activity_profile extends AppCompatActivity {
             if (memberships != null) {
                 clubMembershipsList.clear();
                 clubMembershipsList.addAll(memberships);
+                Log.d("loadUserClubMemberships", "clubMembershipsList: " + clubMembershipsList.toString());
                 if (userClubsAdapter == null) {
                     initClubOfUser();
                 } else {
@@ -149,26 +140,27 @@ public class activity_profile extends AppCompatActivity {
         });
     }
 
-    private void loadUserProfile(String userId) {
-        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user != null) {
-                    EDT_Hello.setText("Hello " + user.getUsername());
-                    EDT_username.setText(user.getUsername());
-                    EDT_email.setText(user.getEmail());
-                    EDT_phone.setText(user.getPhone());
-                    // Load profile image if needed
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
+    private void loadUserProfile() {
+        AppManagerFirebase.fetchUserById(curUserIdFire, fetchedUser -> {
+            if (fetchedUser != null) {
+                User user1 = new User();
+                user1=fetchedUser;
+                ArrayList<String> arr ;
+                arr =new ArrayList<>(user1.getFavoriteStores().keySet());
+                this.favStoreIdList =new ArrayList<>(user1.getFavoriteStores().keySet());
+                Log.d("loadUserProfile", "favStoreList: " + arr.toString());
+                EDT_Hello.setText("Hello " + user1.getUsername());
+                EDT_username.setText(user1.getUsername());
+                EDT_email.setText(user1.getEmail());
+                EDT_phone.setText(user1.getPhone());
+                loadUserClubMemberships(curUserIdFire);
+                initUserFavStores(arr);
+                // Load profile image if needed
             }
         });
+
     }
+
     @Override
     protected void onPause() {
         super.onPause();
