@@ -95,7 +95,17 @@ public class AppManagerFirebase {
 
                 ArrayList<Store> favoriteStores = new ArrayList<>();
                 // Fetch store data for each store ID
-                fetchStoresByIds(favoriteStoreIds, favoriteStores, callback);
+                for (String storeId : favoriteStoreIds) {
+                    fetchStoreById(storeId, store -> {
+                        if (store != null) {
+                            favoriteStores.add(store);
+                        }
+                        // Check if all stores have been fetched
+                        if (favoriteStores.size() == favoriteStoreIds.size()) {
+                            callback.res(favoriteStores);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -103,28 +113,6 @@ public class AppManagerFirebase {
                 callback.res(null);
             }
         });
-    }
-    private static void fetchStoresByIds(ArrayList<String> storeIds, ArrayList<Store> favoriteStores, CallBack<ArrayList<Store>> callback) {
-        final int totalStores = storeIds.size();
-        final int[] fetchedStoresCount = {0};
-
-        for (String storeId : storeIds) {
-            fetchStoreById(storeId, store -> {
-                if (store != null) {
-                    favoriteStores.add(store);
-                }
-                // Check if all stores have been fetched
-                fetchedStoresCount[0]++;
-                if (fetchedStoresCount[0] == totalStores) {
-                    callback.res(favoriteStores);
-                }
-            });
-        }
-
-        // Handle case where no stores are fetched
-        if (storeIds.isEmpty()) {
-            callback.res(new ArrayList<>());
-        }
     }
 
     public static void fetchFavoriteStores(String userId, StoreCallback callback) {
@@ -150,7 +138,7 @@ public class AppManagerFirebase {
         });
     }
 
-    public static void fetchStoreById(String storeId, CallBack<Store> callback) {
+    private static void fetchStoreById(String storeId, CallBack<Store> callback) {
         DatabaseReference storeRef = FirebaseDatabase.getInstance().getReference("stores").child(storeId);
         storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

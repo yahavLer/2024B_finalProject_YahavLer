@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -37,6 +38,8 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
     private Button saveButton;
     private String selectedClubId = "";
     private String currentUserId;
+    private ClubAdapter clubAdapter;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,11 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             currentUserId = currentUser.getUid();
-            // השתמשי במשתנה currentUserId לכל שאר הפונקציות
+            AppManagerFirebase.fetchUserById(currentUserId, fetchedUser -> {
+                if (fetchedUser != null) {
+                    user = fetchedUser;
+                }
+            });
         } else {
             // המשתמש לא מחובר, יש לטפל במצב זה
         }
@@ -69,6 +76,7 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
         }
         // יצירת ה-ClubMembership החדש
         ClubMembership newMembership = new ClubMembership(currentUserId, clubId, cardNumber, parsedExpiryDate);
+        user.addClubMembership(newMembership);
         // עדכון רשימת החברות של המשתמש ב-Firebase
         AppManagerFirebase.addClubMembership(newMembership, currentUserId, success -> {
             if (success) {
@@ -94,7 +102,7 @@ public class activity_manage_club extends AppCompatActivity implements ClubAdapt
             public void res(ArrayList<Club> allClubs) {
                 if (allClubs != null) {
                     clubs = allClubs;
-                    ClubAdapter clubAdapter = new ClubAdapter(clubs, activity_manage_club.this, activity_manage_club.this);
+                    clubAdapter = new ClubAdapter(clubs, activity_manage_club.this, activity_manage_club.this);
                     main_LST_club.setAdapter(clubAdapter);
                 }
             }
