@@ -67,5 +67,15 @@ public class ClubMembership {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "ClubMembership{" +
+                "CmId='" + CmId + '\'' +
+                ", clubId='" + clubId + '\'' +
+                ", creditCardInfo='" + creditCardInfo + '\'' +
+                ", membershipExpiry=" + membershipExpiry +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
 

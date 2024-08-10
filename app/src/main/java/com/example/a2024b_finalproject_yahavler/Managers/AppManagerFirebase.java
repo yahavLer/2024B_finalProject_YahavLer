@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -154,11 +155,19 @@ public class AppManagerFirebase {
     }
 
     public static void fetchStoreById(String storeId, CallBack<Store> callback) {
-        storesRef.child(storeId).addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = storesRef.orderByChild("storeId").equalTo(storeId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Store store = snapshot.getValue(Store.class);
-                callback.res(store);
+                if (snapshot.exists()) {
+                    for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
+                        Store store = storeSnapshot.getValue(Store.class);
+                        Log.d("store_data_firebase", store.toString());
+                        callback.res(store);
+                        return;
+                    }
+                }
+                callback.res(null);
             }
 
             @Override
@@ -167,6 +176,7 @@ public class AppManagerFirebase {
             }
         });
     }
+
 
     public static void fetchUserById(String userId, CallBack<User> callback) {
         usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -320,28 +330,37 @@ public class AppManagerFirebase {
         });
     }
     public static void fetchClubsAcceptedByStore(String storeId, CallBack<ArrayList<Club>> callback) {
-        DatabaseReference storeRef = storesRef.child(storeId).child("acceptedClubs");
-        storeRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Club> clubs = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String clubId = dataSnapshot.getKey();
-                    getClub(clubId, club -> {
-                        if (club != null) {
-                            clubs.add(club);
-                        }
-                        callback.res(clubs);
-                    });
-                }
-            }
+        // First, fetch the store by its storeId to get its name
+        fetchStoreById(storeId, store -> {
+            if (store != null) {
+                String storeName = store.getName();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                callback.res(null); // החזרת ערך null במקרה של ביטול או שגיאה
+                // Now query the clubsRef to find clubs that accept this store
+                clubsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<Club> clubs = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Club club = dataSnapshot.getValue(Club.class);
+                            if (club != null && club.getAcceptedStores() != null && club.getAcceptedStores().contains(storeName)) {
+                                clubs.add(club);
+                            }
+                        }
+                        Log.d("fetchClubsAcceptedByStore", clubs.toString());
+                        callback.res(clubs); // Return the list of matching clubs
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        callback.res(null); // Return null in case of an error
+                    }
+                });
+            } else {
+                callback.res(null); // Return null if the store is not found
             }
         });
     }
+
 
     public static void clearFirebaseData() {
         storesRef.removeValue();

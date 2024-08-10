@@ -12,7 +12,6 @@ public class Store {
     private boolean isFavorite = false;
     private String logo="";
 
-
     public Store() {
     }
 
@@ -72,6 +71,18 @@ public class Store {
     public Store setLogo(String logo) {
         this.logo = logo;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "storeId='" + storeId + '\'' +
+                ", name='" + name + '\'' +
+                ", branchesLocations=" + branchesLocations +
+                ", acceptedClubs=" + acceptedClubs +
+                ", isFavorite=" + isFavorite +
+                ", logo='" + logo + '\'' +
+                '}';
     }
 }
 

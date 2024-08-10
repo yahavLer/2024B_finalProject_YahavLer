@@ -53,4 +53,14 @@ public class Club {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "Club{" +
+                "clubId='" + clubId + '\'' +
+                ", name='" + name + '\'' +
+                ", acceptedStores=" + acceptedStores +
+                ", logoResId='" + logoResId + '\'' +
+                '}';
+    }
 }
+

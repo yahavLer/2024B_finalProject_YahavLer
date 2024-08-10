@@ -58,7 +58,6 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         initAllStores();
     }
 
-
     private void setupSearchFunctionality() {
         search_text.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -103,6 +103,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             }
             Intent intent = new Intent(context, activity_club_accepted_by_store.class);
             intent.putExtra("STORE_ID", store.getStoreId());
+            Log.d("store id", store.getStoreId());
             context.startActivity(intent);
         });
     }
