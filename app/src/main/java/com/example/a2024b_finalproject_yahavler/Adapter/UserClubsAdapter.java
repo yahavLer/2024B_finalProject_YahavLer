@@ -14,7 +14,9 @@ import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.ViewHolder> {
 
@@ -36,17 +38,18 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
         ClubMembership clubMembership = clubMembershipsList.get(position);
         holder.TV_club_name.setText(clubMembership.getClubId());
         holder.TV_club_card_number.setText("Card Number: " + clubMembership.getCreditCardInfo());
-        holder.TV_club_expiry_date.setText("Expiry Date: " + clubMembership.getMembershipExpiry());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+        String expiryDateStr = sdf.format(clubMembership.getMembershipExpiry());
+        holder.TV_club_expiry_date.setText("Expiry Date: " + expiryDateStr);
         // Fetch Club details for logo
-        AppManagerFirebase.getClub(clubMembership.getClubId(), club -> {
+        AppManagerFirebase.fetchClubById(clubMembership.getClubId(), club -> {
             if (club != null) {
-                int logoResId = holder.itemView.getContext().getResources().getIdentifier(club.getLogoResId(), "drawable", holder.itemView.getContext().getPackageName());
-                if (logoResId != 0) {
-                    holder.clubLogo.setImageResource(logoResId);
-                } else {
-                    holder.clubLogo.setImageResource(R.drawable.unavailable_photo); // Default image if no logo found
-                }
+                holder.TV_club_name.setText(club.getName());
                 ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
+            } else {
+                // הגדר ערכים ברירת מחדל במקרה שהמועדון לא נמצא
+                holder.TV_club_name.setText("Club not found");
+                holder.clubLogo.setImageResource(R.drawable.unavailable_photo);
             }
         });
     }

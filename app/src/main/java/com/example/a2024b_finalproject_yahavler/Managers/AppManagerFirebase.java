@@ -176,6 +176,28 @@ public class AppManagerFirebase {
             }
         });
     }
+    public static void fetchClubById(String clubId, CallBack<Club> callback) {
+        Query query = clubsRef.orderByChild("clubId").equalTo(clubId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot clubSnapshot : snapshot.getChildren()) {
+                        Club club = clubSnapshot.getValue(Club.class);
+                        Log.d("club_data_firebase", club.toString());
+                        callback.res(club);
+                        return;
+                    }
+                }
+                callback.res(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.res(null);
+            }
+        });
+    }
 
 
     public static void fetchUserById(String userId, CallBack<User> callback) {
@@ -267,22 +289,6 @@ public class AppManagerFirebase {
         });
     }
 
-    public static void getClub(String clubId, ClubCallback callback) {
-        DatabaseReference clubRef = FirebaseDatabase.getInstance().getReference("clubs").child(clubId);
-        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Club club = snapshot.getValue(Club.class);
-                if (club != null) {
-                    callback.onClubLoaded(club);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
-            }
-        });
-    }
 
     public interface ClubCallback {
         void onClubLoaded(Club club);
