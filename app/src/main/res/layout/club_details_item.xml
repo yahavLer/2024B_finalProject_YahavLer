@@ -16,7 +16,8 @@
         app:cardCornerRadius="@dimen/poster_corner_radius"
         app:cardElevation="@dimen/poster_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/club_CARD_data"
+        app:layout_constraintStart_toStartOf="@id/club_CARD_data"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -29,23 +30,23 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/club_CARD_data"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/data_end_margin"
+        android:layout_marginStart="@dimen/data_start_margin"
         android:layout_marginEnd="@dimen/data_end_margin"
         android:elevation="@dimen/data_elevation"
         app:cardCornerRadius="@dimen/poster_corner_radius"
         app:cardElevation="@dimen/data_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
-            android:layout_width="265dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/poster_elevation"
-            android:layout_marginEnd="@dimen/poster_width">
+            android:layout_marginStart="@dimen/data_start_margin"
+            android:layout_marginEnd="@dimen/data_end_margin">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/TV_club_name"
@@ -56,11 +57,22 @@
                 android:layout_marginStart="@dimen/data_end_margin"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
-                android:layout_marginBottom="@dimen/data_end_margin"
+                android:layout_toStartOf="@id/remove_club_IMG"
+                android:maxLines="2"
+                android:minLines="2"
                 android:textSize="@dimen/title_text_size"
                 android:textStyle="bold"
                 tools:text="Club Name" />
-
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/remove_club_IMG"
+                android:layout_width="@dimen/heart_dimens"
+                android:layout_height="@dimen/heart_dimens"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/heart_margin"
+                android:layout_marginEnd="@dimen/heart_margin"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/remove" />
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/TV_club_accepted_stores"
                 android:layout_width="wrap_content"
