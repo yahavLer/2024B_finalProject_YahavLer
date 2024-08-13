@@ -84,7 +84,7 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
     private void initClubOfUser() {
         if (userClubsAdapter == null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            userClubsAdapter = new UserClubsAdapter(clubsMemUserByStore, this);
+            userClubsAdapter = new UserClubsAdapter(clubsMemUserByStore, this, curUserIdFire);
             recyclerView.setAdapter(userClubsAdapter);
         } else {
             userClubsAdapter.notifyDataSetChanged();

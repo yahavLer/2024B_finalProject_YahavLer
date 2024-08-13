@@ -65,14 +65,17 @@
                 tools:text="Club Name" />
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/remove_club_IMG"
-                android:layout_width="@dimen/heart_dimens"
-                android:layout_height="@dimen/heart_dimens"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/heart_margin"
-                android:layout_marginEnd="@dimen/heart_margin"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/remove" />
+                app:srcCompat="@drawable/remove"
+                android:tint="@android:color/holo_red_dark"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp" />
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/TV_club_accepted_stores"
                 android:layout_width="wrap_content"

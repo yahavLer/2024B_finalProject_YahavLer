@@ -93,4 +93,8 @@ public class User {
     public void addClubMembership(ClubMembership membership) {
         clubMemberships.put(membership.getClubId(), membership);
     }
+
+    public void removeClubMembership(String membershipId) {
+        this.clubMemberships.remove(membershipId);
+    }
 }
