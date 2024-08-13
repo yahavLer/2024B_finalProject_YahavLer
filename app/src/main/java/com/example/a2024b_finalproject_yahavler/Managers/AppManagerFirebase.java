@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AppManagerFirebase {
     private static FirebaseDatabase database = FirebaseDatabase.getInstance();;
@@ -225,19 +226,31 @@ public class AppManagerFirebase {
         usersRef.child(userUid).child("clubMemberships").child(clubId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Integer result = snapshot.getValue(Integer.class);
-                if (result != null  &&   result > 0) {
-                    callBack.res(true);
-                } else{
-                    callBack.res(false);
+                if (snapshot.exists()) {
+                    // נניח שהנתון שברשותך הוא HashMap, תוכל לבדוק את התוכן שלו כאן
+                    // לדוגמה:
+                    if (snapshot.getValue() instanceof Map) {
+                        // יש לך HashMap
+                        Map<String, Object> clubData = (Map<String, Object>) snapshot.getValue();
+                        // תוכל לבדוק אם יש נתונים נוספים שאתה צריך
+                        callBack.res(true); // המועדון קיים
+                    } else {
+                        // אם הנתון אינו HashMap, יתכן וצריך לטפל בצורה אחרת
+                        callBack.res(false); // המועדון לא קיים
+                    }
+                } else {
+                    callBack.res(false); // המועדון לא קיים
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                callBack.res(false); // שגיאה בנתוני Firebase
             }
         });
     }
+
+
+
 
     public static void removeStoreFromFavorites(String storeId) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();

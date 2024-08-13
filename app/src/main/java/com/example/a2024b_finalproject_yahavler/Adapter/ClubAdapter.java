@@ -1,5 +1,6 @@
 package com.example.a2024b_finalproject_yahavler.Adapter;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
@@ -73,21 +74,42 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
 
     private void setupClickListeners(@NonNull ClubViewHolder holder, Club club, int position) {
         holder.btnAddClub.setOnClickListener(v -> {
-            if(holder.CV_club_details.getVisibility() == View.VISIBLE){
-                holder.CV_club_details.setVisibility(View.GONE);
-            }else{
-                holder.CV_club_details.setVisibility(View.VISIBLE);
-            }
+            AppManagerFirebase.isClubOfUser(club.getClubId(), isClubExists -> {
+                if (isClubExists) {
+                    // פתח תיבת שאלה אם לעדכן את הפרטים
+                    new AlertDialog.Builder(context)
+                            .setTitle("עדכון פרטים")
+                            .setMessage("המועדון כבר קיים ברשימת המועדונים שלך, האם ברצונך לעדכן את הפרטים?")
+                            .setPositiveButton("כן", (dialog, which) -> {
+                                // פתח את חלונית הפרטים
+                                holder.CV_club_details.setVisibility(View.VISIBLE);
+                            })
+                            .setNegativeButton("לא", (dialog, which) -> {
+                                // סגור את החלונית, לא תבצע כל פעולה
+                                holder.CV_club_details.setVisibility(View.GONE);
+                            })
+                            .show();
+                } else {
+                    // המועדון לא קיים ברשימה
+                    if(holder.CV_club_details.getVisibility() == View.VISIBLE){
+                        holder.CV_club_details.setVisibility(View.GONE);
+                    }else{
+                        holder.CV_club_details.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
         });
+
         holder.ET_ClubExpiryDate.setOnClickListener(v -> showDatePickerDialog(holder.ET_ClubExpiryDate));
         holder.saveButton.setOnClickListener(v -> {
-            selectedClubId = club.getClubId();// עדכון ה-clubId
-            Log.e("selectedClubId",selectedClubId);
-            saveClubMembership( selectedClubId,
-                holder.ET_ClubCardNumber.getText().toString(),
-                holder.ET_ClubExpiryDate.getText().toString());
+            selectedClubId = club.getClubId(); // עדכון ה-clubId
+            Log.e("selectedClubId", selectedClubId);
+            saveClubMembership(selectedClubId,
+                    holder.ET_ClubCardNumber.getText().toString(),
+                    holder.ET_ClubExpiryDate.getText().toString());
         });
     }
+
 
     public void saveClubMembership(String clubId, String cardNumber, String expiryDate) {
         Log.e("saveClubMembership",selectedClubId);
@@ -112,23 +134,20 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     }
 
     private void showDatePickerDialog(EditText ET_ClubExpiryDate) {
-        // Get the current date
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Create a new instance of DatePickerDialog and show it
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                context,  // שימוש ב-context במקום this
+                context,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    // Format the selected date (you can customize this format)
                     String formattedDate = String.format(Locale.getDefault(), "%02d/%d", selectedMonth + 1, selectedYear);
                     ET_ClubExpiryDate.setText(formattedDate);
                 },
-                year, month, day);
+                year, month, calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+
     private Date parseDate(String dateStr) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         try {
