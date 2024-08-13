@@ -32,6 +32,8 @@
         <activity android:name=".ActivityView.stores_of_club_home_view" />
         <activity android:name=".ActivityView.activity_manage_club" />
         <activity android:name=".ActivityView.activity_club_accepted_by_store" />
+        <activity android:name=".ActivityView.activity_store_accepted_by_club" />
+
 
     </application>
 

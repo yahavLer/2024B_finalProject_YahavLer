@@ -117,7 +117,7 @@ public class activity_profile extends AppCompatActivity {
         if (userClubsAdapter == null) {
             Log.d("initClubOfUser", "clubMembershipsList: " + clubMembershipsList.toString());
             clubsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            userClubsAdapter = new UserClubsAdapter(clubMembershipsList);
+            userClubsAdapter = new UserClubsAdapter(clubMembershipsList, this);
             clubsRecyclerView.setAdapter(userClubsAdapter);
         } else {
             userClubsAdapter.notifyDataSetChanged();

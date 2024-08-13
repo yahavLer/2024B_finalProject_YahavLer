@@ -367,6 +367,37 @@ public class AppManagerFirebase {
         });
     }
 
+    public static void fetchStoresAcceptedByClub(String clubId, CallBack<ArrayList<Store>> callback) {
+        // תחילה, נחפש את המועדון לפי ה-clubId כדי לקבל את שם המועדון
+        fetchClubById(clubId, club -> {
+            if (club != null) {
+                String clubName = club.getName();
+
+                // כעת נשאל את storesRef כדי למצוא חנויות שמקבלות את המועדון
+                storesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<Store> stores = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Store store = dataSnapshot.getValue(Store.class);
+                            if (store != null && store.getAcceptedClubs() != null && store.getAcceptedClubs().contains(clubName)) {
+                                stores.add(store);
+                            }
+                        }
+                        Log.d("fetchStoresAcceptedByClub", stores.toString());
+                        callback.res(stores); // החזרת הרשימה של החנויות שמצאנו
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        callback.res(null); // החזרת null במקרה של שגיאה
+                    }
+                });
+            } else {
+                callback.res(null); // החזרת null אם לא נמצא המועדון
+            }
+        });
+    }
 
     public static void clearFirebaseData() {
         storesRef.removeValue();

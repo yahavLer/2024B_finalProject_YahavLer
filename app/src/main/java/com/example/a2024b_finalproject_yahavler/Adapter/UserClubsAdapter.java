@@ -1,5 +1,7 @@
 package com.example.a2024b_finalproject_yahavler.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.ActivityView.activity_store_accepted_by_club;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.ImageLoader;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
@@ -21,9 +24,11 @@ import java.util.Locale;
 public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.ViewHolder> {
 
     private ArrayList<ClubMembership> clubMembershipsList;
+    private Context context;
 
-    public UserClubsAdapter(ArrayList<ClubMembership> clubMembershipsList) {
+    public UserClubsAdapter(ArrayList<ClubMembership> clubMembershipsList, Context context) {
         this.clubMembershipsList = clubMembershipsList;
+        this.context = context;
     }
 
     @NonNull
@@ -52,13 +57,20 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
                 holder.clubLogo.setImageResource(R.drawable.unavailable_photo);
             }
         });
+        setupClickListeners(holder, clubMembership);
     }
 
     @Override
     public int getItemCount() {
         return clubMembershipsList.size();
     }
-
+    private void setupClickListeners(@NonNull ViewHolder holder, ClubMembership clubMembership) {
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, activity_store_accepted_by_club.class);
+            intent.putExtra("CLUB_ID", clubMembership.getClubId());
+            context.startActivity(intent);
+        });
+    }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView TV_club_name, TV_club_card_number, TV_club_expiry_date, TV_club_accepted_stores;
         ImageView clubLogo;
