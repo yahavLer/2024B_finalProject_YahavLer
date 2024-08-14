@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a2024b_finalproject_yahavler.Adapter.StoreAdapter;
+import com.example.a2024b_finalproject_yahavler.Callback.CustomBackCallback;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
@@ -35,6 +36,8 @@ public class activity_store_accepted_by_club extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stores_accepted_by_club);
         findView();
+        CustomBackCallback callback = new CustomBackCallback(this);
+        getOnBackPressedDispatcher().addCallback(this, callback);
         NevigationActivity.findNevigationButtens(this);
         currentUser=AppManagerFirebase.getCurrentUser();
 
@@ -73,5 +76,24 @@ public class activity_store_accepted_by_club extends AppCompatActivity {
         } else {
             storeAdapter.notifyDataSetChanged();
         }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Lifecycle", "onPause called");
+        // Save any necessary state here
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Lifecycle", "onResume called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Lifecycle", "onDestroy called");
+        // Clean up any resources here
     }
 }

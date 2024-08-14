@@ -2,6 +2,7 @@ package com.example.a2024b_finalproject_yahavler.ActivityView;
 
 import com.example.a2024b_finalproject_yahavler.Adapter.StoreAdapter;
 import com.example.a2024b_finalproject_yahavler.Adapter.UserClubsAdapter;
+import com.example.a2024b_finalproject_yahavler.Callback.CustomBackCallback;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.Store;
@@ -56,6 +57,8 @@ public class activity_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_view);
         findView();
+        CustomBackCallback callback = new CustomBackCallback(this);
+        getOnBackPressedDispatcher().addCallback(this, callback);
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         currentUser = AppManagerFirebase.getCurrentUser();

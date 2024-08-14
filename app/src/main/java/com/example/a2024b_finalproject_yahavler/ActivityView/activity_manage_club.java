@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a2024b_finalproject_yahavler.Callback.CustomBackCallback;
 import com.example.a2024b_finalproject_yahavler.Callback.ManageClubCallback;
 import com.example.a2024b_finalproject_yahavler.Callback.ObjectCallback;
 import com.example.a2024b_finalproject_yahavler.Model.User;
@@ -46,6 +47,8 @@ public class activity_manage_club extends AppCompatActivity implements ObjectCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_clubs);
         findView();
+        CustomBackCallback callback = new CustomBackCallback(this);
+        getOnBackPressedDispatcher().addCallback(this, callback);
         currentUser=AppManagerFirebase.getCurrentUser();
         initAllClubs();
         NevigationActivity.findNevigationButtens(this);

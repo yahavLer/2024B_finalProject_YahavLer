@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a2024b_finalproject_yahavler.Adapter.StoreAdapter;
+import com.example.a2024b_finalproject_yahavler.Callback.CustomBackCallback;
 import com.example.a2024b_finalproject_yahavler.DataManagers.StoreManager;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
@@ -50,6 +51,8 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stores_of_club_home_view);
         findView();
+        CustomBackCallback callback = new CustomBackCallback(this);
+        getOnBackPressedDispatcher().addCallback(this, callback);
         currentUser=AppManagerFirebase.getCurrentUser();
         setupSearchFunctionality();  // Add this method call
         NevigationActivity.findNevigationButtens(this);

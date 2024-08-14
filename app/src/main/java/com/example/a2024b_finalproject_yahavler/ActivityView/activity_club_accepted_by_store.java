@@ -1,5 +1,6 @@
 package com.example.a2024b_finalproject_yahavler.ActivityView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.a2024b_finalproject_yahavler.Adapter.ClubAdapter;
 import com.example.a2024b_finalproject_yahavler.Adapter.UserClubsAdapter;
+import com.example.a2024b_finalproject_yahavler.Callback.CustomBackCallback;
 import com.example.a2024b_finalproject_yahavler.Managers.AppManagerFirebase;
 import com.example.a2024b_finalproject_yahavler.Managers.NevigationActivity;
 import com.example.a2024b_finalproject_yahavler.Model.Club;
@@ -43,6 +45,8 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clubs_accepted_by_store);
         findView();
+        CustomBackCallback callback = new CustomBackCallback(this);
+        getOnBackPressedDispatcher().addCallback(this, callback);
         currentUser = AppManagerFirebase.getCurrentUser();
         if (currentUser != null) {
             curUserIdFire = currentUser.getUid();
@@ -136,5 +140,6 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
         super.onDestroy();
         Log.d("Lifecycle", "onDestroy called");
     }
+
 }
 
