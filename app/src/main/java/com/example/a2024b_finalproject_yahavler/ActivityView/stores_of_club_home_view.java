@@ -125,7 +125,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
                 @Override
                 public void res(String username) {
                     if (username != null) {
-                        welcome_text.setText("Welcome, " + username);
+                        welcome_text.setText(username);
                     } else {
                         // Handle the case where the username is null
                     }

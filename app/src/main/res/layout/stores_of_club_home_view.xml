@@ -16,14 +16,23 @@
             android:orientation="horizontal"
             android:backgroundTint="@color/colorPrimary"
             android:padding="4dp" >
+            <TextView
+                android:id="@+id/welcome_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ברוכים הבאים "
+                android:textSize="24dp"
+                android:background="@color/colorAccent"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/welcome_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="welcome name"
-                android:textSize="26dp"
-                android:background="@color/colorAccent" />
+                android:text=""
+                android:textSize="24dp"
+                android:textColor="@color/backgroundColor"/>
+
         </LinearLayout>
         <LinearLayout
             android:id="@+id/stores_accepting_club_view"
@@ -56,7 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:queryHint="Search by store here"
+                android:queryHint="חיפוש חנות"
                 android:iconifiedByDefault="false"
                 android:background="@color/colorAccent" />
 
@@ -64,7 +73,7 @@
                 android:id="@+id/search_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search"
+                android:text="חיפוש"
                 android:backgroundTint="@color/backgroundColor" />
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView

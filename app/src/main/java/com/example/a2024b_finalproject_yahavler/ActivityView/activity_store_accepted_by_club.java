@@ -53,7 +53,7 @@ public class activity_store_accepted_by_club extends AppCompatActivity {
     private void fetchClubData(String clubId) {
         AppManagerFirebase.fetchClubById(clubId, fetchClub -> {
             if (fetchClub != null){
-                clubNameTextView.setText("Stores accepting: " + fetchClub.getName());
+                clubNameTextView.setText(fetchClub.getName());
                 fetchStoresAcceptedByClub(fetchClub);
             }
         });

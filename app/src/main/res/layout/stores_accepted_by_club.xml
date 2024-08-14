@@ -20,12 +20,21 @@
             android:padding="4dp" >
 
             <TextView
-                android:id="@+id/stores_accepted_by_club_text"
-                android:layout_width="match_parent"
+                android:id="@+id/stores_accepted_by_club_lbl"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stores Accepted by Club"
-                android:textSize="32dp"
-                android:background="@color/colorAccent" />
+                android:text="חנויות שמקבלות את מועדון "
+                android:textSize="24dp"
+                android:background="@color/colorAccent"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/stores_accepted_by_club_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="24dp"
+                android:textColor="@color/backgroundColor"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -81,7 +81,6 @@ public class activity_profile extends AppCompatActivity {
         EDT_username = findViewById(R.id.profile_EDT_username);
         EDT_email = findViewById(R.id.profile_EDT_email);
         EDT_phone = findViewById(R.id.profile_phone);
-        profileImage = findViewById(R.id.profile_image);
         clubsRecyclerView = findViewById(R.id.UserClub_recycler_view);
         storesRecyclerView = findViewById(R.id.favorites_recycler_view);
         btnFavorite = findViewById(R.id.btn_favorite);
@@ -151,7 +150,7 @@ public class activity_profile extends AppCompatActivity {
                 arr =new ArrayList<>(user1.getFavoriteStores().keySet());
                 this.favStoreIdList =new ArrayList<>(user1.getFavoriteStores().keySet());
                 Log.d("loadUserProfile", "favStoreList: " + arr.toString());
-                EDT_Hello.setText("Hello " + user1.getUsername());
+                EDT_Hello.setText("שלום " + user1.getUsername());
                 EDT_username.setText(user1.getUsername());
                 EDT_email.setText(user1.getEmail());
                 EDT_phone.setText(user1.getPhone());

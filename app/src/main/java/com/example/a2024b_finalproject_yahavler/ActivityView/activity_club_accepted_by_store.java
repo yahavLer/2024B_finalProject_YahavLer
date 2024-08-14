@@ -68,7 +68,7 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
             if (fetchStore != null){
                 this.store = fetchStore;
                 Log.d("store_data", store.toString());
-                storeNameTextView.setText("Your club accepted by: " + store.getName());
+                storeNameTextView.setText(store.getName());
                 fetchClubsAcceptedByStore();
             }
         });
