@@ -104,7 +104,6 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
         });
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView TV_club_name, TV_club_card_number, TV_club_expiry_date, TV_club_accepted_stores;
         ImageView clubLogo;

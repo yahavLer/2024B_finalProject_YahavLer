@@ -29,7 +29,7 @@
                 android:id="@+id/clubs_accepted_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="מקבלת את המועדונים הבאים שברשותך"
+                android:text="massege"
                 android:textSize="22dp"
                 android:background="@color/colorAccent"
                 android:layout_weight="1" />

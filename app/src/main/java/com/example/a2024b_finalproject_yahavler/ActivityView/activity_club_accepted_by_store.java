@@ -125,6 +125,8 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
         Log.d("checkClubsMemberships", clubsMemUserByStore.toString());
         if (clubsMemUserByStore.isEmpty()) {
             clubs_accepted_text.setText("לצערנו החנות לא מקבלת אף מועדון שברשותך,\nעמך הסליחה, תוכל להוסיף מועדונים במסך club");
+        }else {
+            clubs_accepted_text.setText("מקבלת את המועדונים הבאים שברשותך:");
         }
     }
 
