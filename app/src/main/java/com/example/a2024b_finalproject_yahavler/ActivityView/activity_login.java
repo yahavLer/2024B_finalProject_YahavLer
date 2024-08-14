@@ -2,7 +2,9 @@ package com.example.a2024b_finalproject_yahavler.ActivityView;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.RenderEffect;
 import android.net.Uri;
 import android.os.Build;
@@ -70,6 +72,9 @@ public class activity_login extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("NavigationPrefs", Context.MODE_PRIVATE);
+                        int selectedButtonId = sharedPreferences.getInt("selectedButtonId", R.id.navigation_home);
+
                         Intent intent = new Intent(activity_login.this, stores_of_club_home_view.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

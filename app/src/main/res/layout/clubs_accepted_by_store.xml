@@ -14,18 +14,27 @@
             android:id="@+id/club_accepted_by_store_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:backgroundTint="@color/colorPrimary"
             android:padding="4dp" >
             <TextView
                 android:id="@+id/clubs_accepted_by_store_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Clubs Accepted by Store"
-                android:textSize="32dp"
-                android:background="@color/colorAccent" />
-
+                android:text="Store "
+                android:textSize="24dp"
+                android:background="@color/colorAccent"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/clubs_accepted_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מקבלת את המועדונים הבאים שברשותך"
+                android:textSize="22dp"
+                android:background="@color/colorAccent"
+                android:layout_weight="1" />
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/clubs_recycler_view"
             android:layout_width="match_parent"

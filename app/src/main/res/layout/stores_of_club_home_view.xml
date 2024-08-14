@@ -47,7 +47,7 @@
                 android:id="@+id/stores_accepting_club_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stores accepting your clubs"
+                android:text="לפניך רשימת כל החנויות,\nבחר חנות על מנת לדעת איזה מועדונים היא מקבלת"
                 android:textSize="16dp"
                 android:background="@color/colorAccent" />
         </LinearLayout>

@@ -29,6 +29,7 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TextView storeNameTextView;
+    private TextView clubs_accepted_text;
 
     private String curUserIdFire;
     private String storeId;
@@ -61,6 +62,7 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
     private void findView() {
         storeNameTextView = findViewById(R.id.clubs_accepted_by_store_text);
         recyclerView = findViewById(R.id.clubs_recycler_view);
+        clubs_accepted_text = findViewById(R.id.clubs_accepted_text);
     }
 
     private void fetchStoreData(String storeId) {
@@ -121,6 +123,9 @@ public class activity_club_accepted_by_store extends AppCompatActivity {
             }
         }
         Log.d("checkClubsMemberships", clubsMemUserByStore.toString());
+        if (clubsMemUserByStore.isEmpty()) {
+            clubs_accepted_text.setText("לצערנו החנות לא מקבלת אף מועדון שברשותך,\nעמך הסליחה, תוכל להוסיף מועדונים במסך club");
+        }
     }
 
     @Override
