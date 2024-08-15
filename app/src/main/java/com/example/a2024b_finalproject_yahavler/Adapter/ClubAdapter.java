@@ -25,6 +25,7 @@ import com.example.a2024b_finalproject_yahavler.Model.Club;
 import com.example.a2024b_finalproject_yahavler.Model.ClubMembership;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
+import com.google.android.play.integrity.internal.i;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,6 +69,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     private void setupClubDetails(@NonNull ClubViewHolder holder, Club club) {
         ImageLoader.init(context);
         holder.clubName.setText(club.getName());
+        holder.clubDescription.setText(club.getDescription());
         ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
         holder.CV_club_details.setVisibility(View.GONE);
     }
@@ -167,7 +169,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     }
 
     public static class ClubViewHolder extends RecyclerView.ViewHolder {
-        TextView clubName;
+        TextView clubName, clubDescription;
         ImageView clubLogo;
         ImageButton btnAddClub;
         CardView CV_club_details;
@@ -176,6 +178,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
         public ClubViewHolder(@NonNull View itemView) {
             super(itemView);
             clubName = itemView.findViewById(R.id.club_name);
+            clubDescription = itemView.findViewById(R.id.club_description);
             clubLogo = itemView.findViewById(R.id.IV_club_logo);
             btnAddClub = itemView.findViewById(R.id.btn_add_club);
             CV_club_details = itemView.findViewById(R.id.CV_club_details);

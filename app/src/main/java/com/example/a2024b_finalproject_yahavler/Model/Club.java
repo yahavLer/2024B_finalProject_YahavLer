@@ -9,6 +9,7 @@ public class Club {
     private String name;
     private List<String> acceptedStores;
     private String logoResId;
+    private String description;
 
 
     public Club() {
@@ -52,7 +53,14 @@ public class Club {
         this.logoResId = logoResId;
         return this;
     }
+    public String getDescription() {
+        return description;
+    }
 
+    public Club setDescription(String description) {
+        this.description = description;
+        return this;
+    }
     @Override
     public String toString() {
         return "Club{" +
@@ -60,6 +68,7 @@ public class Club {
                 ", name='" + name + '\'' +
                 ", acceptedStores=" + acceptedStores +
                 ", logoResId='" + logoResId + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

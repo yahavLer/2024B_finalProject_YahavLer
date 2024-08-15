@@ -73,7 +73,9 @@ public class activity_login extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         SharedPreferences sharedPreferences = getSharedPreferences("NavigationPrefs", Context.MODE_PRIVATE);
-                        int selectedButtonId = sharedPreferences.getInt("selectedButtonId", R.id.navigation_home);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("selectedButtonId", R.id.navigation_home);
+                        editor.apply();
 
                         Intent intent = new Intent(activity_login.this, stores_of_club_home_view.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

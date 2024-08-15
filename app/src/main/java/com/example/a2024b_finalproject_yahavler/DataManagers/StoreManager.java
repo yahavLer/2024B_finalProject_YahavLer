@@ -13,7 +13,7 @@ public class StoreManager {
                 .setStoreId()
                 .setName("Aldo")
                 .setBranchesLocations(new ArrayList<>(Arrays.asList("Tel Aviv", "Jerusalem")))
-                .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר")))
+                .setAcceptedClubs(new ArrayList<>(Arrays.asList("חבר", "בהצדעה")))
                 .setFavorite(false)
                 .setLogo("https://www.mcc.co.il/pics/giftcard/logo_aldo.jpg")
         );

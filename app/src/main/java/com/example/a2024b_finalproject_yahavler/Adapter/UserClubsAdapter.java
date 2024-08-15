@@ -67,6 +67,7 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
         AppManagerFirebase.fetchClubById(clubMembership.getClubId(), club -> {
             if (club != null) {
                 holder.TV_club_name.setText(club.getName());
+                holder.TV_club_descript.setText(club.getDescription());
                 ImageLoader.getInstance().load(club.getLogoResId(), holder.clubLogo);
             } else {
                 // הגדר ערכים ברירת מחדל במקרה שהמועדון לא נמצא
@@ -105,7 +106,7 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView TV_club_name, TV_club_card_number, TV_club_expiry_date, TV_club_accepted_stores;
+        TextView TV_club_name, TV_club_card_number, TV_club_expiry_date, TV_club_descript;
         ImageView clubLogo;
         ShapeableImageView removeClub_IV;
 
@@ -116,7 +117,7 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
             TV_club_name = itemView.findViewById(R.id.TV_club_name);
             TV_club_card_number = itemView.findViewById(R.id.TV_club_card_number);
             TV_club_expiry_date = itemView.findViewById(R.id.TV_club_expiry_date);
-            TV_club_accepted_stores = itemView.findViewById(R.id.TV_club_accepted_stores);
+            TV_club_descript = itemView.findViewById(R.id.TV_club_descript);
             removeClub_IV = itemView.findViewById(R.id.remove_club_IMG);
         }
     }

@@ -53,15 +53,25 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="@dimen/data_end_margin"
-                android:layout_marginTop="@dimen/data_end_margin"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
-                android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/btn_add_club"
                 android:textSize="@dimen/title_text_size"
                 android:textStyle="bold"
                 tools:text="Club Name" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/club_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/club_name"
+                android:layout_marginStart="@dimen/data_end_margin"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="@dimen/data_end_margin"
+                android:textSize="16dp"
+                android:layout_toStartOf="@id/btn_add_club"
+                tools:text="Club Description" />
             <ImageButton
                 android:id="@+id/btn_add_club"
                 android:layout_width="wrap_content"

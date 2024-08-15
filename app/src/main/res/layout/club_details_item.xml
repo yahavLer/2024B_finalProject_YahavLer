@@ -77,7 +77,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp" />
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/TV_club_accepted_stores"
+                android:id="@+id/TV_club_descript"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/TV_club_name"
@@ -88,13 +88,13 @@
                 android:maxLines="1"
                 android:minLines="1"
                 android:textSize="@dimen/data_text_size"
-                tools:text="Accepted in Stores: Store 1, Store 2" />
+                tools:text="club description" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/TV_club_card_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/TV_club_accepted_stores"
+                android:layout_below="@id/TV_club_descript"
                 android:layout_alignStart="@id/TV_club_name"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
