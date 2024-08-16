@@ -34,14 +34,12 @@ import java.util.ArrayList;
 
 public class activity_profile extends AppCompatActivity {
     private TextView EDT_Hello, EDT_username, EDT_email, EDT_phone;
-    private ImageView profileImage;
     private RecyclerView clubsRecyclerView, storesRecyclerView;
     private Button btnFavorite,btnClubs ;
 
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
-    private User user = new User();
 
     private UserClubsAdapter userClubsAdapter;
     private StoreAdapter favStoreOfUserAdapter ;
@@ -156,7 +154,6 @@ public class activity_profile extends AppCompatActivity {
                 EDT_phone.setText(user1.getPhone());
                 loadUserClubMemberships(curUserIdFire);
                 initUserFavStores(arr);
-                // Load profile image if needed
             }
         });
 
@@ -166,7 +163,6 @@ public class activity_profile extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d("Lifecycle", "onPause called");
-        // Save any necessary state here
     }
 
     @Override
@@ -179,6 +175,5 @@ public class activity_profile extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("Lifecycle", "onDestroy called");
-        // Clean up any resources here
     }
 }

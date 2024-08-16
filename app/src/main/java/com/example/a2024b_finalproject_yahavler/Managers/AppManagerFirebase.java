@@ -58,13 +58,6 @@ public class AppManagerFirebase {
         void res(T res);
     }
 
-    public static void addUser(User user) {
-        usersRef.child(user.getUserId()).setValue(user);
-    }
-
-    public static void addClub(Club club) {
-        clubsRef.child(club.getClubId()).setValue(club);
-    }
     public static void addAllStores(ArrayList<Store>allStores){
         storesRef.setValue(allStores);
     }
@@ -84,6 +77,7 @@ public class AppManagerFirebase {
                     listener.onSuccess(task.isSuccessful());
                 });
     }
+
     public static void fetchFavoriteStores(ArrayList<String> favStoreIdList, CallBack<ArrayList<Store>> callback) {
         ArrayList<Store> allFavStores = new ArrayList<>();
         storesRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -103,54 +97,6 @@ public class AppManagerFirebase {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // טיפול בשגיאה במקרה של ביטול או כישלון
-            }
-        });
-    }
-    public static void fetchUserFavoriteStores(String userId, CallBack<ArrayList<Store>> callback) {
-        DatabaseReference userRef = usersRef.child(userId);
-        DatabaseReference favUserRef = userRef.child("favoriteStores");
-        favUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Store> allStores = new ArrayList<>();
-                for (DataSnapshot storeSnapshot : snapshot.getChildren()) {
-                    String favStoreId = storeSnapshot.getKey();
-                    fetchStoreById(favStoreId,fetchedStore -> {
-                        if (fetchedStore != null) {
-                            Store favStore = new Store();
-                            favStore = fetchedStore;
-                            allStores.add(favStore);
-                        }
-                    });
-                }
-                callback.res(allStores);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                callback.res(null);
-            }
-        });
-    }
-
-    public static void fetchFavoriteStores(String userId, StoreCallback callback) {
-        DatabaseReference userFavoritesRef = FirebaseDatabase.getInstance()
-                .getReference("users")
-                .child(userId)
-                .child("favoriteStores");
-
-        userFavoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> favoriteStores = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    favoriteStores.add(dataSnapshot.getValue(String.class));
-                }
-                callback.onFavoriteStoresFetched(favoriteStores); // קריאה למתודה החדשה
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
             }
         });
     }
@@ -177,6 +123,7 @@ public class AppManagerFirebase {
             }
         });
     }
+
     public static void fetchClubById(String clubId, CallBack<Club> callback) {
         Query query = clubsRef.orderByChild("clubId").equalTo(clubId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -200,7 +147,6 @@ public class AppManagerFirebase {
         });
     }
 
-
     public static void fetchUserById(String userId, CallBack<User> callback) {
         usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -214,11 +160,6 @@ public class AppManagerFirebase {
                 callback.res(null);
             }
         });
-    }
-
-    public static void addClubToUser(String clubId) {
-        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        usersRef.child(userUid).child("clubMemberships").child(clubId).setValue("1");
     }
 
     public static void isClubOfUser(String clubId, CallBack<Boolean> callBack) {
@@ -248,9 +189,6 @@ public class AppManagerFirebase {
             }
         });
     }
-
-
-
 
     public static void removeStoreFromFavorites(String storeId) {
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -302,7 +240,6 @@ public class AppManagerFirebase {
         });
     }
 
-
     public interface ClubCallback {
         void onClubLoaded(Club club);
     }
@@ -348,6 +285,7 @@ public class AppManagerFirebase {
             }
         });
     }
+
     public static void fetchClubsAcceptedByStore(String storeId, CallBack<ArrayList<Club>> callback) {
         // First, fetch the store by its storeId to get its name
         fetchStoreById(storeId, store -> {

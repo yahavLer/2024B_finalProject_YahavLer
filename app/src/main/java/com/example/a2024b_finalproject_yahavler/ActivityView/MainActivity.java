@@ -32,8 +32,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     Button btnRegister;
     Button btnLogin;
-    private ArrayList<Store> stores = new ArrayList<>();
-    private ArrayList<Club> clubs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         AppManagerFirebase.initStoresFirebaseData();
         AppManagerFirebase.initClubsFirebaseData();
 
-        // Load data from Firebase
-//        AppManagerFirebase.loadDataFromFirebase();
         setBtnClick();
     }
 
@@ -72,20 +68,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//    private void initAllStores(){
-//        stores = StoreManager.getStores();
-//        AppManagerFirebase.addAllStores(stores);
-//    }
-//    private void initAllClubs(){
-//        clubs = ClubManager.getClub();
-//        AppManagerFirebase.addAllClubs(clubs);
-//    }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.d("Lifecycle", "onPause called");
-        // Save any necessary state here
     }
 
     @Override
@@ -98,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("Lifecycle", "onDestroy called");
-        // Clean up any resources here
     }
 
 

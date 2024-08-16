@@ -7,7 +7,6 @@ public class Store {
     private static  int storeCounter= 0;
     private String storeId;
     private String name;
-    private ArrayList<String> branchesLocations = null;
     private ArrayList<String> acceptedClubs= null;
     private boolean isFavorite = false;
     private String logo="";
@@ -46,15 +45,6 @@ public class Store {
         return this;
     }
 
-    public ArrayList<String> getBranchesLocations() {
-        return branchesLocations;
-    }
-
-    public Store setBranchesLocations(ArrayList<String> branchesLocations) {
-        this.branchesLocations = branchesLocations;
-        return this;
-    }
-
     public ArrayList<String> getAcceptedClubs() {
         return acceptedClubs;
     }
@@ -78,7 +68,6 @@ public class Store {
         return "Store{" +
                 "storeId='" + storeId + '\'' +
                 ", name='" + name + '\'' +
-                ", branchesLocations=" + branchesLocations +
                 ", acceptedClubs=" + acceptedClubs +
                 ", isFavorite=" + isFavorite +
                 ", logo='" + logo + '\'' +

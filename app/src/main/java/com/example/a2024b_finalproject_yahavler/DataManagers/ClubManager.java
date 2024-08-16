@@ -40,7 +40,7 @@ public class ClubManager {
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("מועדון יותר")
+                .setName(" יותר")
                 .setLogoResId("https://www.yoter.co.il/wp-content/uploads/2023/06/b39c913b374fd11a3d60b76b05e16bde.b197b0.webp")
                 .setDescription("חיילים בשירות חובה, מלש\"בים עם צו גיוס עליו מוטבע תאריך גיוס סופי")
         );
@@ -54,35 +54,35 @@ public class ClubManager {
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("מועדון עדיף")
+                .setName(" עדיף")
                 .setLogoResId("https://uniq-club-shop.s3.eu-west-1.amazonaws.com/images/a3fb50c5ca27951ba9c31295be8bea89.png")
                 .setDescription("נכים ובעלי מוגבלויות")
         );
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("מועדון תמורה")
+                .setName(" תמורה")
                 .setLogoResId("https://sherut-il.com/wp-content/uploads/2024/01/%D7%90%D7%A8%D7%92%D7%95%D7%9F-%D7%94%D7%9E%D7%95%D7%A8%D7%99%D7%9D-%D7%A9%D7%99%D7%A8%D7%95%D7%AA-%D7%9C%D7%A7%D7%95%D7%97%D7%95%D7%AA-%D7%9C%D7%95%D7%92%D7%95-768x768.jpg")
                 .setDescription("חברי ארגון המורים")
         );
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("מועדון UNIQ")
+                .setName(" UNIQ")
                 .setLogoResId("https://uniq-club-shop.s3.eu-west-1.amazonaws.com/images/ae757dce2950d7a4827f907cb0be0d84.png")
                 .setDescription("סטודנטים, חברי סגל ובוגרי אוניברסיטאות")
         );
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("מועדון istudent")
+                .setName(" istudent")
                 .setLogoResId("https://istudent.co.il/wp-content/uploads/2022/06/%D7%90%D7%99%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98-1.png")
                 .setDescription("סטודנטים")
         );
 
         clubs.add(new Club()
                 .setClubId()
-                .setName("מועדון ALL CLUB")
+                .setName(" ALL CLUB")
                 .setLogoResId("https://www.allclub.co.il/wp-content/uploads/2023/03/all-alub-new-logo-84-30.png")
                 .setDescription("עצמאים, עצמאיות, בעלי ובעלות עסקים ועובדיהם")
         );

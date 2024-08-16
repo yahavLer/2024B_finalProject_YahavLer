@@ -1,10 +1,12 @@
 package com.example.a2024b_finalproject_yahavler.ActivityView;
 
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +40,6 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
     private RecyclerView main_LST_store;
     private ArrayList<Store> stores = new ArrayList<>();
     private ArrayList<Store> filteredStores = new ArrayList<>();
-    private Set<String> userStoreIds = new HashSet<>();
     private FirebaseUser currentUser;
     private TextView welcome_text;
     private DatabaseReference userDatabaseRef;
@@ -54,7 +55,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         CustomBackCallback callback = new CustomBackCallback(this);
         getOnBackPressedDispatcher().addCallback(this, callback);
         currentUser=AppManagerFirebase.getCurrentUser();
-        setupSearchFunctionality();  // Add this method call
+        setupSearchFunctionality();
         NevigationActivity.findNevigationButtens(this);
         userDatabaseRef = FirebaseDatabase.getInstance().getReference("users");
         fetchUserName();
@@ -127,7 +128,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
                     if (username != null) {
                         welcome_text.setText(username);
                     } else {
-                        // Handle the case where the username is null
+                        Log.d("username null", "username");
                     }
                 }
             });

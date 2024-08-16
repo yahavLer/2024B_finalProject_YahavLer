@@ -1,5 +1,6 @@
 package com.example.a2024b_finalproject_yahavler.ActivityView;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,11 +74,11 @@ public class activity_registration extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else {
-                                        // טיפול בשגיאה בהוספת נתונים לבסיס הנתונים
+                                        Toast.makeText(this, "Register Failed ", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {
-                        // טיפול בשגיאה ביצירת משתמש
+                        Toast.makeText(this, "create User Failed ", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

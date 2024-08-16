@@ -81,7 +81,6 @@ public class activity_store_accepted_by_club extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d("Lifecycle", "onPause called");
-        // Save any necessary state here
     }
 
     @Override
@@ -94,6 +93,5 @@ public class activity_store_accepted_by_club extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("Lifecycle", "onDestroy called");
-        // Clean up any resources here
     }
 }

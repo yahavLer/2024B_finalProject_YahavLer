@@ -70,7 +70,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         ImageLoader.init(context);
         ImageLoader.getInstance().loadImage(store.getLogo(), holder.storeLogo);
         holder.storeName.setText(store.getName());
-        holder.branchesLocations.setText(String.join("Branches: ", store.getBranchesLocations()));
         holder.storeClubs.setText(String.join("Accepted Clubs: ", store.getAcceptedClubs()));
     }
 
@@ -123,7 +122,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         private final CardView store_CARD_data;
         private final TextView storeName;
         private final ImageView storeLogo;
-        private final TextView branchesLocations;
         private final TextView storeClubs;
         private final ShapeableImageView favoriteButton;
 
@@ -132,7 +130,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             store_CARD_data = itemView.findViewById(R.id.store_CARD_data);
             storeName = itemView.findViewById(R.id.tv_store_name);
             storeLogo = itemView.findViewById(R.id.iv_store_logo);
-            branchesLocations = itemView.findViewById(R.id.tv_store_branches_locations);
             storeClubs = itemView.findViewById(R.id.tv_store_clubs);
             favoriteButton = itemView.findViewById(R.id.movie_IMG_favorite);
         }

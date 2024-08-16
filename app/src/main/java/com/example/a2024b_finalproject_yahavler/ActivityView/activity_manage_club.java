@@ -80,7 +80,6 @@ public class activity_manage_club extends AppCompatActivity implements ObjectCal
     protected void onPause() {
         super.onPause();
         Log.d("Lifecycle", "onPause called");
-        // Save any necessary state here
     }
 
     @Override
@@ -93,7 +92,6 @@ public class activity_manage_club extends AppCompatActivity implements ObjectCal
     protected void onDestroy() {
         super.onDestroy();
         Log.d("Lifecycle", "onDestroy called");
-        // Clean up any resources here
     }
 
     @Override
