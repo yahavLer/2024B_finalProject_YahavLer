@@ -8,8 +8,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="@dimen/poster_width"
-        android:layout_height="@dimen/poster_height"
+        android:layout_width="@dimen/small_poster_width"
+        android:layout_height="@dimen/small_poster_height"
         android:layout_marginVertical="@dimen/poster_vertical_margin"
         android:layout_marginStart="@dimen/poster_vertical_margin"
         android:elevation="@dimen/poster_elevation"
@@ -75,31 +75,18 @@
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/empty_heart" />
 
+
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_store_branches_locations"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_store_clubs"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_store_name"
                 android:layout_alignStart="@id/tv_store_name"
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
-                android:maxLines="1"
-                android:minLines="1"
-                android:textSize="@dimen/data_text_size"
-                tools:text="Branches: Branch 1, Branch 2" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_store_clubs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_store_branches_locations"
-                android:layout_alignStart="@id/tv_store_name"
-                android:layout_marginTop="@dimen/data_end_margin"
-                android:layout_marginEnd="@dimen/data_end_margin"
-                android:layout_marginBottom="@dimen/data_end_margin"
-                android:maxLines="1"
-                android:minLines="1"
+                android:maxLines="2"
+                android:minLines="2"
                 android:textSize="@dimen/data_text_size"
                 tools:text="Accepted Clubs: Club 1, Club 2" />
         </RelativeLayout>

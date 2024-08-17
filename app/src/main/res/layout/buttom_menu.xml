@@ -41,28 +41,5 @@
         android:gravity="center"
         android:padding="8dp"
         android:backgroundTint="@android:color/transparent" />
-
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/navigation_stores"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_weight="1"-->
-<!--        android:text="Store"-->
-<!--        app:icon="@drawable/ic_stores"-->
-<!--        app:iconGravity="textTop"-->
-<!--        android:gravity="center"-->
-<!--        android:padding="8dp"-->
-<!--        android:backgroundTint="@android:color/transparent" />-->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/navigation_store_locations"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Location"
-        app:icon="@drawable/ic_location"
-        app:iconGravity="textTop"
-        android:gravity="center"
-        android:padding="8dp"
-        android:backgroundTint="@android:color/transparent" />
-
+    
 </LinearLayout>

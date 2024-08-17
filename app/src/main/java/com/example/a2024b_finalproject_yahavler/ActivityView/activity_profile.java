@@ -68,11 +68,13 @@ public class activity_profile extends AppCompatActivity {
 
         NevigationActivity.findNevigationButtens(this);
 
-        btnFavorite.setOnClickListener(v -> showFavoriteStores());
-        btnClubs.setOnClickListener(v -> showUserClubs());
+        btnFavorite.setOnClickListener(v -> {
+            showFavoriteStores();
+        });
+        btnClubs.setOnClickListener(v -> {
+            showUserClubs();
+        });
     }
-
-
 
     private void findView() {
         EDT_Hello = findViewById(R.id.Hello);

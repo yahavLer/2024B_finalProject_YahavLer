@@ -128,6 +128,7 @@
                 android:layout_marginBottom="@dimen/data_end_margin"
                 android:hint="Expiry Date (MM/yyyy)"
                 android:inputType="none"
+                android:focusable="false"
                 android:maxLines="1"
                 android:minLines="1"
                 android:textSize="@dimen/data_text_size"

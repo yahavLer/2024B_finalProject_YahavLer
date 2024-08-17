@@ -70,7 +70,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         ImageLoader.init(context);
         ImageLoader.getInstance().loadImage(store.getLogo(), holder.storeLogo);
         holder.storeName.setText(store.getName());
-        holder.storeClubs.setText(String.join("Accepted Clubs: ", store.getAcceptedClubs()));
+//        holder.storeClubs.setText(String.join("Accepted Clubs: ", store.getAcceptedClubs()));
     }
 
     private void setupFavoriteButton(@NonNull StoreViewHolder holder, Store store) {

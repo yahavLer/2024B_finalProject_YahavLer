@@ -59,10 +59,10 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ClubMembership clubMembership = clubMembershipsList.get(position);
         holder.TV_club_name.setText(clubMembership.getClubId());
-        holder.TV_club_card_number.setText("Card Number: " + clubMembership.getCreditCardInfo());
+        holder.TV_club_card_number.setText("מספר כרטיס: " + clubMembership.getCreditCardInfo());
         SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
         String expiryDateStr = sdf.format(clubMembership.getMembershipExpiry());
-        holder.TV_club_expiry_date.setText("Expiry Date: " + expiryDateStr);
+        holder.TV_club_expiry_date.setText("תוקף המועדון: " + expiryDateStr);
         // Fetch Club details for logo
         AppManagerFirebase.fetchClubById(clubMembership.getClubId(), club -> {
             if (club != null) {
