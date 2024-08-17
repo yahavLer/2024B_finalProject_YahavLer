@@ -96,10 +96,12 @@ public class UserClubsAdapter extends RecyclerView.Adapter<UserClubsAdapter.View
                         // פתח את חלונית הפרטים
                         AppManagerFirebase.removeClubFromUser(clubMembership.getClubId());
                         user.removeClubMembership(clubMembership.getClubId());
-                        clubMembershipsList.remove(clubMembership.getClubId());
+                        clubMembershipsList.remove(position);
+                        notifyItemRemoved(position); // עדכן את RecyclerView
+                        Toast.makeText(context, "המועדון נמחק בהצלחה", Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("לא", (dialog, which) -> {
-                        // סגור את החלונית, לא תבצע כל פעולה
+                        dialog.dismiss();
                     })
                     .show();
         });
