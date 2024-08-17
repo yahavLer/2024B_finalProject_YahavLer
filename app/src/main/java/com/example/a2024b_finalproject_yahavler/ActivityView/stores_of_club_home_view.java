@@ -1,6 +1,7 @@
 package com.example.a2024b_finalproject_yahavler.ActivityView;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.example.a2024b_finalproject_yahavler.Model.Store;
 import com.example.a2024b_finalproject_yahavler.Model.User;
 import com.example.a2024b_finalproject_yahavler.R;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,12 +48,14 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
     private SearchView search_text;
     private Button search_button;
     private StoreAdapter storeAdapter;
+    private MaterialButton btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stores_of_club_home_view);
         findView();
+        btnLogout.setOnClickListener(v -> logoutUser());
         CustomBackCallback callback = new CustomBackCallback(this);
         getOnBackPressedDispatcher().addCallback(this, callback);
         currentUser=AppManagerFirebase.getCurrentUser();
@@ -61,7 +65,14 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         fetchUserName();
         initAllStores();
     }
-
+    private void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(this, "logged out succefully", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, activity_login.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
     private void setupSearchFunctionality() {
         search_text.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -97,6 +108,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
         welcome_text = findViewById(R.id.welcome_text);
         search_text = findViewById(R.id.search_text);
         search_button = findViewById(R.id.search_button);
+        btnLogout = findViewById(R.id.btnLogout);
     }
 
     private void initAllStores() {
