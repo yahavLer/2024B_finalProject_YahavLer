@@ -35,7 +35,7 @@ public class AppManagerFirebase {
     private static FirebaseUser currentUser = mAuth.getCurrentUser();
 
     public static FirebaseUser getCurrentUser() {
-        return currentUser;
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public static FirebaseDatabase getDatabase() {
