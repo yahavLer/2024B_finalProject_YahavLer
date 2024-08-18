@@ -67,6 +67,7 @@ public class stores_of_club_home_view extends AppCompatActivity implements Objec
     }
     private void logoutUser() {
         FirebaseAuth.getInstance().signOut();
+        AppManagerFirebase.clearCachedUserData(); // מחיקת הנתונים של המשתמש המחובר
         Toast.makeText(this, "logged out succefully", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, activity_login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

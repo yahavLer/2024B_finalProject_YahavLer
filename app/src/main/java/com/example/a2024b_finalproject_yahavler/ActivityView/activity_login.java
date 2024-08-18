@@ -72,15 +72,26 @@ public class activity_login extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        SharedPreferences sharedPreferences = getSharedPreferences("NavigationPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("selectedButtonId", R.id.navigation_home);
-                        editor.apply();
+                        // טעינת הנתונים של המשתמש המחובר
+                        AppManagerFirebase.fetchCurrentUserData(new AppManagerFirebase.CallBack<User>() {
+                            @Override
+                            public void res(User user) {
+                                if (user != null) {
+                                    // כאן אפשר להמשיך עם ניווט למסך הבית או להציג את הנתונים של המשתמש
+                                    SharedPreferences sharedPreferences = getSharedPreferences("NavigationPrefs", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putInt("selectedButtonId", R.id.navigation_home);
+                                    editor.apply();
 
-                        Intent intent = new Intent(activity_login.this, stores_of_club_home_view.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                                    Intent intent = new Intent(activity_login.this, stores_of_club_home_view.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(activity_login.this, "Failed to load user data", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     } else {
                         // טיפול בשגיאת התחברות
                         Toast.makeText(activity_login.this, "Login failed. Please check your credentials", Toast.LENGTH_SHORT).show();

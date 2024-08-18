@@ -33,7 +33,40 @@ public class AppManagerFirebase {
     private static DatabaseReference storesRef = database.getReference("stores");
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static FirebaseUser currentUser = mAuth.getCurrentUser();
+    private static User loggedInUser;
+    public static void fetchCurrentUserData(final CallBack<User> callBack) {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            usersRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    if (user != null) {
+                        user.setFirebaseUserId(uid);
+                        loggedInUser = user;
+                        callBack.res(user);
+                    } else {
+                        callBack.res(null); // טיפול במצב שבו לא נמצאו נתונים
+                    }
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    callBack.res(null); // טיפול בשגיאה
+                }
+            });
+        } else {
+            callBack.res(null); // טיפול במצב שבו currentUser הוא null
+        }
+    }
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public static void clearCachedUserData() {
+        loggedInUser = null;
+    }
     public static FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
