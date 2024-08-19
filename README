@@ -1,0 +1,75 @@
+
+# Benefit Finder
+
+**Benefit Finder** is a mobile application that unifies all benefits from customer clubs and credit cards in one place, allowing users to view, compare, and choose the most beneficial club or credit card when making a purchase.
+
+## Purpose of the Application
+
+- **Unifying Benefits**: To gather all benefits from different customer clubs and credit cards in one place.
+- **Comparing Benefits**: To allow users to view and compare all their benefits in an easy-to-use interface.
+- **Choosing the Best Benefit**: To help users select the most beneficial club or credit card when making a purchase, allowing them to maximize their benefits and save time and money.
+
+## The Need for the Application
+
+- Many people are members of different consumer clubs and use various credit cards with diverse benefits.
+- Keeping track of these benefits can be confusing and time-consuming.
+- **Benefit Finder** is designed to solve this problem by centralizing all benefits in one place, so users can efficiently utilize their benefits and save time and money.
+
+## Project Structure
+
+- **ActivityView**
+  - `activity_club_accepted_by_store`: Displays stores that accept clubs.
+  - `activity_login`: Login screen.
+  - `activity_manage_club`: User's club management, where the user can add clubs.
+  - `activity_profile`: User profile, displays the user's details, favorite stores, and clubs they are members of.
+  - `activity_registration`: Registration screen.
+  - `activity_store_accepted_by_club`: Displays clubs the user is a member of that accept the selected store.
+  - `MainActivity`: The main screen of the application, showing registration and login buttons.
+  - `stores_of_club_home_view`: Displays stores that accept the club selected by the user.
+
+- **Adapter**
+  - `ClubAdapter`: Adapter for displaying clubs.
+  - `StoreAdapter`: Adapter for displaying stores.
+  - `UserClubsAdapter`: Adapter for managing user's clubs.
+
+- **DataManagers**
+  - `ClubManager`: Manages club data.
+  - `StoreManager`: Manages store data.
+
+- **Managers**
+  - `AppManagerFirebase`: Manages communication with Firebase.
+  - `ImageLoader`: Loads images.
+  - `NevigationActivity`: Manages navigation between screens.
+
+- **Model**
+  - `Club`: Model for a customer club.
+  - `ClubMembership`: Model for club membership.
+  - `Store`: Model for a store.
+  - `User`: Model for a user.
+
+## Installation Instructions
+
+1. Download the source code of the application.
+2. Open the project in Android Studio.
+3. Add the `google-services.json` file for Firebase (if required).
+4. Ensure that all dependencies are correctly defined in the `build.gradle` file.
+5. Run the application on a device or emulator.
+
+## Using the Application
+
+1. **Login**: Log in with an existing account or create a new account using the registration screen.
+2. **Managing Clubs**: Add, edit, or delete clubs you have access to.
+3. **Marking Favorite Stores**: Mark stores you like to quickly access their benefits.
+4. **Comparing Benefits**: Compare different benefits to find the most advantageous club or card.
+
+## Technologies and Services
+
+- **Firebase**: For user management and data storage.
+- **Android Studio**: The development environment for the application.
+- **Java**: The primary programming language used for the application.
+
+## License
+
+The application was created by Yahav Ler. All rights reserved.
+
+---
