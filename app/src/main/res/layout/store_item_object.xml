@@ -58,8 +58,8 @@
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_toStartOf="@id/movie_IMG_favorite"
-                android:maxLines="2"
-                android:minLines="2"
+                android:maxLines="1"
+                android:minLines="1"
                 android:textSize="@dimen/title_text_size"
                 android:textStyle="bold"
                 tools:text="Store Name" />
@@ -85,10 +85,10 @@
                 android:layout_marginTop="@dimen/data_end_margin"
                 android:layout_marginEnd="@dimen/data_end_margin"
                 android:layout_marginBottom="@dimen/data_end_margin"
-                android:maxLines="2"
-                android:minLines="2"
+                android:maxLines="3"
+                android:minLines="3"
                 android:textSize="@dimen/data_text_size"
-                tools:text="Accepted Clubs: Club 1, Club 2" />
+                tools:text="מועדונים שמקבלת " />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
