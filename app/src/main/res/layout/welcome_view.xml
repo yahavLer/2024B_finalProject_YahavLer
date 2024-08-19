@@ -13,10 +13,12 @@
         tools:layout_editor_absoluteY="52dp">
 
         <TextView
+            android:id="@+id/welcome_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:layout_centerHorizontal="true"
             android:text="Welcome to Benefit Finder!"
             android:textSize="24sp"
@@ -27,11 +29,16 @@
 
         <ImageView
             android:id="@+id/logo"
+            android:layout_below="@id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/ic_logo" />
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/logo_benefit"
+
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside" />
+
 
         <Button
             android:id="@+id/btn_register"
