@@ -201,15 +201,11 @@ public class AppManagerFirebase {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // נניח שהנתון שברשותך הוא HashMap, תוכל לבדוק את התוכן שלו כאן
-                    // לדוגמה:
+                    // בדיקת תוכן ה Map
                     if (snapshot.getValue() instanceof Map) {
-                        // יש לך HashMap
                         Map<String, Object> clubData = (Map<String, Object>) snapshot.getValue();
-                        // תוכל לבדוק אם יש נתונים נוספים שאתה צריך
-                        callBack.res(true); // המועדון קיים
+                        callBack.res(true);
                     } else {
-                        // אם הנתון אינו HashMap, יתכן וצריך לטפל בצורה אחרת
                         callBack.res(false); // המועדון לא קיים
                     }
                 } else {
@@ -320,12 +316,12 @@ public class AppManagerFirebase {
     }
 
     public static void fetchClubsAcceptedByStore(String storeId, CallBack<ArrayList<Club>> callback) {
-        // First, fetch the store by its storeId to get its name
+        // fetch the store by its storeId to get its name
         fetchStoreById(storeId, store -> {
             if (store != null) {
                 String storeName = store.getName();
 
-                // Now query the clubsRef to find clubs that accept this store
+                // query the clubsRef to find clubs that accept this store
                 clubsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -352,12 +348,11 @@ public class AppManagerFirebase {
     }
 
     public static void fetchStoresAcceptedByClub(String clubId, CallBack<ArrayList<Store>> callback) {
-        // תחילה, נחפש את המועדון לפי ה-clubId כדי לקבל את שם המועדון
+        //fined the club by the clubId in order to get the name of the club
         fetchClubById(clubId, club -> {
             if (club != null) {
                 String clubName = club.getName();
-
-                // כעת נשאל את storesRef כדי למצוא חנויות שמקבלות את המועדון
+                //query the storesRef in order to fined the stores get the club
                 storesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -402,7 +397,6 @@ public class AppManagerFirebase {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
             }
         });
     }
